@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PulseOnBallHit : MonoBehaviour {
     public Material pulseMaterial;
+    public AudioSource pulseSound;
     private Material[] originalMaterials;
 
     private void Start() {
@@ -18,6 +19,7 @@ public class PulseOnBallHit : MonoBehaviour {
             Material[] oldMats = meshRenderer.materials;
             oldMats[0] = pulseMaterial;
             meshRenderer.materials = oldMats;
+            pulseSound.Play();
         }
     }
 
