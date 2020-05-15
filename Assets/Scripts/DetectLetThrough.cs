@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DetectLetThrough : MonoBehaviour {
+    public GameObject GameControllerObj;
+
     /**
      * True if detecting the player's let through; false if detecting
      * the opponent's.
@@ -17,7 +19,7 @@ public class DetectLetThrough : MonoBehaviour {
 
     void OnTriggerEnter(Collider otherCollider) {
         if (otherCollider.gameObject.tag == "Ball") {
-            GameObject.FindWithTag("Controller").GetComponent<GameController>().EndRound(!IsForPlayer);
+            GameControllerObj.GetComponent<GameController>().EndRound(!IsForPlayer);
         }    
     }
 }

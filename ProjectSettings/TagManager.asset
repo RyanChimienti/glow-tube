@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Ball
   - Menu
-  - Controller
   layers:
   - Default
   - TransparentFX

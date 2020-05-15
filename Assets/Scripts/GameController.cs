@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Provides methods for high-level game actions.
+/// </summary>
 public class GameController : MonoBehaviour {
-    public static int PlayerScore;
-    public static int OpponentScore;
-
     public GameObject ball;
     public GameObject menu;
 
-    void Start() {
-        GameController.PlayerScore = 0;
-        GameController.OpponentScore = 0;
+    public void Start() {
+        GameState.CurrentStatus = GameState.Status.IN_MENU;
+        GameState.PlayerScore = 0;
+        GameState.OpponentScore = 0;
 
         ball.SetActive(false);
         menu.SetActive(true);
@@ -22,17 +23,19 @@ public class GameController : MonoBehaviour {
         ball.SetActive(true);
         ball.GetComponent<Rigidbody>().position = menu.transform.position;
         ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -20);
+        GameState.CurrentStatus = GameState.Status.PLAYING_ROUND;
     }
 
     public void EndRound(bool playerWon) {
         if (playerWon) {
-            PlayerScore++;
+            GameState.PlayerScore++;
         }
         else {
-            OpponentScore++;
+            GameState.OpponentScore++;
         }
 
         menu.SetActive(true);
         ball.SetActive(false);
+        GameState.CurrentStatus = GameState.Status.IN_MENU;
     }
 }

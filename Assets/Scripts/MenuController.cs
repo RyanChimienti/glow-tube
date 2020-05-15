@@ -4,23 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour {
-    public GameObject scoreText;
+    public GameObject ScoreText;
 
     void Start() {
-        scoreText.GetComponent<Text>().text = $"Ready?";
+        ScoreText.GetComponent<Text>().text = $"Ready?";
     }
 
     private void OnEnable() {
-        int playerScore = GameController.PlayerScore;
-        int oppScore = GameController.OpponentScore;
+        int playerScore = GameState.PlayerScore;
+        int oppScore = GameState.OpponentScore;
         if (playerScore > oppScore) {
-            scoreText.GetComponent<Text>().text = $"Winning {playerScore} - {oppScore}";
+            ScoreText.GetComponent<Text>().text = $"Winning {playerScore} - {oppScore}";
         }
         else if (playerScore < oppScore) {
-            scoreText.GetComponent<Text>().text = $"Losing {playerScore} - {oppScore}";
+            ScoreText.GetComponent<Text>().text = $"Losing {playerScore} - {oppScore}";
         }
         else {
-            scoreText.GetComponent<Text>().text = $"Tied {playerScore} - {oppScore}";
+            ScoreText.GetComponent<Text>().text = $"Tied {playerScore} - {oppScore}";
         }
     }
 }

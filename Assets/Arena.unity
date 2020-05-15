@@ -391,8 +391,9 @@ GameObject:
   - component: {fileID: 407518063}
   - component: {fileID: 407518062}
   - component: {fileID: 407518066}
+  - component: {fileID: 407518067}
   m_Layer: 0
-  m_Name: Backboard
+  m_Name: Opponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,8 +467,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407518061}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.169, y: 0.96362, z: 2.1160002}
-  m_LocalScale: {x: 0.74787235, y: 0.8846683, z: -0.07402263}
+  m_LocalPosition: {x: -0.005, y: 0.96362, z: 2.023}
+  m_LocalScale: {x: 0.36665085, y: 0.34148195, z: -0.028572734}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -486,6 +487,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pulseMaterial: {fileID: 2100000, guid: 534ce51c505757d4eba5e9126c4dcb83, type: 2}
   pulseSound: {fileID: 1087367586}
+--- !u!114 &407518067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407518061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f286ff836226ebe498b7be083bb24a70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &440049923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1708,6 +1721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e06cf9dc00ae15542b9be6c862c4a47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameControllerObj: {fileID: 1866810451}
   IsForPlayer: 1
 --- !u!23 &1460849367
 MeshRenderer:
@@ -1765,7 +1779,7 @@ Transform:
   m_GameObject: {fileID: 1460849364}
   m_LocalRotation: {x: -0.017648304, y: 0.7068865, z: -0.7068866, w: 0.017648611}
   m_LocalPosition: {x: 0.14, y: 0.96, z: -0.61}
-  m_LocalScale: {x: 0.24426876, y: 0.24426876, z: 0.24426876}
+  m_LocalScale: {x: 0.5831672, y: 0.3338049, z: 0.5831672}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -1935,7 +1949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02f97a9876c6f9940993ecc956b61841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 2089086179}
+  ScoreText: {fileID: 2089086179}
 --- !u!1 &1635885206
 GameObject:
   m_ObjectHideFlags: 0
@@ -2506,6 +2520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e06cf9dc00ae15542b9be6c862c4a47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameControllerObj: {fileID: 1866810451}
   IsForPlayer: 0
 --- !u!1 &1866810451
 GameObject:
@@ -2519,7 +2534,7 @@ GameObject:
   - component: {fileID: 1866810452}
   m_Layer: 0
   m_Name: GameControllerContainer
-  m_TagString: Controller
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
