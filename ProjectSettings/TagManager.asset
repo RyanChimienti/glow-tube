@@ -8,6 +8,8 @@ TagManager:
   - Menu
   - LeftHand
   - RightHand
+  - Tunnel
+  - CameraOffset
   layers:
   - Default
   - TransparentFX
