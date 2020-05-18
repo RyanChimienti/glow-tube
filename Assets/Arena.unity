@@ -514,7 +514,7 @@ GameObject:
   - component: {fileID: 440049925}
   m_Layer: 0
   m_Name: LeftHand Controller
-  m_TagString: Untagged
+  m_TagString: LeftHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -786,8 +786,8 @@ MonoBehaviour:
   m_HapticSelectExitIntensity: 0
   m_HapticSelectExitDuration: 0
   m_PlayHapticsOnHoverEnter: 0
-  m_HapticHoverEnterIntensity: 0
-  m_HapticHoverEnterDuration: 0
+  m_HapticHoverEnterIntensity: 0.1
+  m_HapticHoverEnterDuration: 0.3
   m_PlayHapticsOnHoverExit: 0
   m_HapticHoverExitIntensity: 0
   m_HapticHoverExitDuration: 0
@@ -809,7 +809,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
   m_HoverToSelect: 0
-  m_HoverTimeToSelect: 0.5
+  m_HoverTimeToSelect: 0
   m_EnableUIInteraction: 1
 --- !u!114 &440049928
 MonoBehaviour:
@@ -831,9 +831,9 @@ MonoBehaviour:
   m_ActivateUsage: 2
   m_UIPressUsage: 2
   m_AxisToPressThreshold: 0.1
-  m_ModelPrefab: {fileID: 0}
+  m_ModelPrefab: {fileID: 400000, guid: 32fbc8bcebb64584da5868aeeb086cda, type: 3}
   m_ModelTransform: {fileID: 0}
-  m_AnimateModel: 0
+  m_AnimateModel: 1
   m_ModelSelectTransition: 
   m_ModelDeSelectTransition: 
 --- !u!1 &483988219 stripped
@@ -1609,7 +1609,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.15686275, g: 0.9921569, b: 1, a: 1}
-    m_SelectedColor: {r: 0.7176471, g: 0.7176471, b: 0.7176471, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.9150943, g: 0.45323068, b: 0.45323068, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1965,7 +1965,7 @@ GameObject:
   - component: {fileID: 1635885208}
   m_Layer: 0
   m_Name: RightHand Controller
-  m_TagString: Untagged
+  m_TagString: RightHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2237,8 +2237,8 @@ MonoBehaviour:
   m_HapticSelectExitIntensity: 0
   m_HapticSelectExitDuration: 0
   m_PlayHapticsOnHoverEnter: 0
-  m_HapticHoverEnterIntensity: 0
-  m_HapticHoverEnterDuration: 0
+  m_HapticHoverEnterIntensity: 0.1
+  m_HapticHoverEnterDuration: 0.3
   m_PlayHapticsOnHoverExit: 0
   m_HapticHoverExitIntensity: 0
   m_HapticHoverExitDuration: 0
@@ -2260,7 +2260,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
   m_HoverToSelect: 0
-  m_HoverTimeToSelect: 0.5
+  m_HoverTimeToSelect: 0
   m_EnableUIInteraction: 1
 --- !u!114 &1635885211
 MonoBehaviour:
@@ -2282,7 +2282,7 @@ MonoBehaviour:
   m_ActivateUsage: 2
   m_UIPressUsage: 2
   m_AxisToPressThreshold: 0.1
-  m_ModelPrefab: {fileID: 0}
+  m_ModelPrefab: {fileID: 400000, guid: 37ba10a26a648144fa2390c8adfb2c8a, type: 3}
   m_ModelTransform: {fileID: 0}
   m_AnimateModel: 0
   m_ModelSelectTransition: 
@@ -2533,7 +2533,7 @@ GameObject:
   - component: {fileID: 1866810453}
   - component: {fileID: 1866810452}
   m_Layer: 0
-  m_Name: GameControllerContainer
+  m_Name: MiscScriptContainer
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
