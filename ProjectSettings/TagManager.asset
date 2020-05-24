@@ -10,6 +10,8 @@ TagManager:
   - RightHand
   - Tunnel
   - CameraOffset
+  - LeftControllerUI
+  - RightControllerUI
   layers:
   - Default
   - TransparentFX

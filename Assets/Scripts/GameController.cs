@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Provides methods for high-level game actions.
@@ -8,17 +10,31 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
     public GameObject ball;
     public GameObject menu;
+    public GameObject leftHand;
+    public GameObject rightHand;
+    public GameObject leftControllerUI;
+    public GameObject rightControllerUI;
+    public GameObject paddle;
+
+    /// <summary>
+    /// True if the player is holding controllers; false if
+    /// the player is holding the paddle.
+    /// </summary>
+    private bool controllersActive = true;
 
     public void Start() {
         GameState.CurrentStatus = GameState.Status.IN_MENU;
         GameState.PlayerScore = 0;
         GameState.OpponentScore = 0;
 
+        paddle.SetActive(false);
         ball.SetActive(false);
         menu.SetActive(true);
     }
 
     public void StartNewRound() {
+        ToggleControllersActive();
+
         menu.SetActive(false);
         ball.SetActive(true);
         ball.GetComponent<Rigidbody>().position = menu.transform.position;
@@ -27,6 +43,8 @@ public class GameController : MonoBehaviour {
     }
 
     public void EndRound(bool playerWon) {
+        ToggleControllersActive();
+
         if (playerWon) {
             GameState.PlayerScore++;
         }
@@ -37,5 +55,29 @@ public class GameController : MonoBehaviour {
         menu.SetActive(true);
         ball.SetActive(false);
         GameState.CurrentStatus = GameState.Status.IN_MENU;
+    }
+
+    private void ToggleControllersActive() {
+        controllersActive = !controllersActive;
+        paddle.SetActive(!controllersActive);
+                
+        if (!controllersActive) {            
+            // While the ray interactor is still enabled on the controller,
+            // force it to grab the paddle. Since we will next disable the interactor,
+            // the user will not be able to drop the paddle. (Note that ForceSelect
+            // must be made public in XRInteractionManager.)
+            Object.FindObjectOfType<XRInteractionManager>().ForceSelect(
+                rightHand.GetComponent<XRRayInteractor>(),
+                paddle.GetComponent<XRGrabInteractable>()
+                );
+        }
+
+        leftHand.GetComponent<XRController>().hideControllerModel = !controllersActive;
+        leftHand.GetComponent<XRRayInteractor>().enabled = controllersActive;
+        leftControllerUI.SetActive(controllersActive);
+
+        rightHand.GetComponent<XRController>().hideControllerModel = !controllersActive;
+        rightHand.GetComponent<XRRayInteractor>().enabled = controllersActive;
+        rightControllerUI.SetActive(controllersActive);        
     }
 }
