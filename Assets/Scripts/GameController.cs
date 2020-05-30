@@ -60,17 +60,6 @@ public class GameController : MonoBehaviour {
     private void ToggleControllersActive() {
         controllersActive = !controllersActive;
         paddle.SetActive(!controllersActive);
-                
-        if (!controllersActive) {            
-            // While the ray interactor is still enabled on the controller,
-            // force it to grab the paddle. Since we will next disable the interactor,
-            // the user will not be able to drop the paddle. (Note that ForceSelect
-            // must be made public in XRInteractionManager.)
-            Object.FindObjectOfType<XRInteractionManager>().ForceSelect(
-                rightHand.GetComponent<XRRayInteractor>(),
-                paddle.GetComponent<XRGrabInteractable>()
-                );
-        }
 
         leftHand.GetComponent<XRController>().hideControllerModel = !controllersActive;
         leftHand.GetComponent<XRRayInteractor>().enabled = controllersActive;
