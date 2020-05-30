@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Reposition : MonoBehaviour {
     public void Update() {
+        // We can't reposition unless we're in the menu.
+        if (GameState.CurrentStatus != GameState.Status.IN_MENU) {
+            return;
+        }
+
         bool rightHandRepositioning = SecondaryButtonIsPressed(false);
         if (rightHandRepositioning) {
             MoveArena(false);
