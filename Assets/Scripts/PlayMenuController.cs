@@ -19,6 +19,9 @@ public class PlayMenuController : MonoBehaviour {
         else if (playerScore < oppScore) {
             ScoreText.GetComponent<Text>().text = $"Losing {playerScore} - {oppScore}";
         }
+        else if (playerScore == 0) {
+            ScoreText.GetComponent<Text>().text = $"Ready?";
+        }
         else {
             ScoreText.GetComponent<Text>().text = $"Tied {playerScore} - {oppScore}";
         }

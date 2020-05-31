@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeldObject : MonoBehaviour { 
+public class PaddleController : MonoBehaviour { 
     public bool leftHand;
     
     private GameObject controllerObj;
     private Rigidbody rigidbody;
 
     private void Start() {
-        rigidbody = this.GetComponent<Rigidbody>();
+        rigidbody = this.GetComponent<Rigidbody>();        
+    }
 
+    private void OnEnable() {
         controllerObj = leftHand ? GameObject.FindGameObjectWithTag("LeftHand") :
                                     GameObject.FindGameObjectWithTag("RightHand");
     }

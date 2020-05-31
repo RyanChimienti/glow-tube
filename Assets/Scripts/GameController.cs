@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine;
 using System.Runtime.CompilerServices;
+using System;
 
 /// <summary>
 /// Provides methods for high-level game actions.
@@ -61,7 +62,14 @@ public class GameController : MonoBehaviour {
 
     private void ToggleControllersActive() {
         controllersActive = !controllersActive;
-        paddle.SetActive(!controllersActive);
+
+        // Before activating the paddle, make sure it's in the correct hand.
+        if (PlayerPrefs.HasKey("PaddleInLeftHand")) {
+            paddle.GetComponent<PaddleController>().leftHand = Convert.ToBoolean(
+                PlayerPrefs.GetInt("PaddleInLeftHand")
+            );
+        }
+        paddle.SetActive(!controllersActive);        
 
         leftHand.GetComponent<XRController>().hideControllerModel = !controllersActive;
         leftHand.GetComponent<XRRayInteractor>().enabled = controllersActive;
