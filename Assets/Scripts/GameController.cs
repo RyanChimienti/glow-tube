@@ -9,7 +9,8 @@ using System.Runtime.CompilerServices;
 /// </summary>
 public class GameController : MonoBehaviour {
     public GameObject ball;
-    public GameObject menu;
+    public GameObject playMenu;
+    public GameObject settingsMenu;
     public GameObject leftHand;
     public GameObject rightHand;
     public GameObject leftControllerUI;
@@ -29,15 +30,16 @@ public class GameController : MonoBehaviour {
 
         paddle.SetActive(false);
         ball.SetActive(false);
-        menu.SetActive(true);
+        playMenu.SetActive(true);
+        settingsMenu.SetActive(false);
     }
 
     public void StartNewRound() {
         ToggleControllersActive();
 
-        menu.SetActive(false);
+        playMenu.SetActive(false);
         ball.SetActive(true);
-        ball.GetComponent<Rigidbody>().position = menu.transform.position;
+        ball.GetComponent<Rigidbody>().position = playMenu.transform.position;
         ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -20);
         GameState.CurrentStatus = GameState.Status.PLAYING_ROUND;
     }
@@ -52,7 +54,7 @@ public class GameController : MonoBehaviour {
             GameState.OpponentScore++;
         }
 
-        menu.SetActive(true);
+        playMenu.SetActive(true);
         ball.SetActive(false);
         GameState.CurrentStatus = GameState.Status.IN_MENU;
     }
@@ -68,5 +70,15 @@ public class GameController : MonoBehaviour {
         rightHand.GetComponent<XRController>().hideControllerModel = !controllersActive;
         rightHand.GetComponent<XRRayInteractor>().enabled = controllersActive;
         rightControllerUI.SetActive(controllersActive);        
+    }
+
+    public void OpenSettingsMenu() {
+        playMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+    }
+
+    public void OpenPlayMenu() {
+        playMenu.SetActive(true);
+        settingsMenu.SetActive(false);
     }
 }
