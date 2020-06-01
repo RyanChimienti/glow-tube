@@ -786,6 +786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f286ff836226ebe498b7be083bb24a70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameControllerObj: {fileID: 1866810451}
 --- !u!1 &416710888
 GameObject:
   m_ObjectHideFlags: 0
@@ -3374,7 +3375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb1a97a1e6070948b68f51daa05368d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHand: 0
+  gameControllerObj: {fileID: 1866810451}
 --- !u!1 &1809464867
 GameObject:
   m_ObjectHideFlags: 0

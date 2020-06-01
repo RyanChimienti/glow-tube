@@ -11,8 +11,19 @@ public static class GameState
         IN_MENU,
         PLAYING_ROUND
     }
-
     public static Status CurrentStatus;
+    
     public static int PlayerScore;
     public static int OpponentScore;
+    
+    /// <summary>
+    /// True if the player was the last one to touch the ball; false if it
+    /// was the opponent.
+    /// </summary>
+    public static bool PlayerHitLast;
+
+    /// <summary>
+    /// The last time the ball changed possesion.
+    /// </summary>
+    public static System.DateTime MostRecentTurnChange;
 }

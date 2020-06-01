@@ -4,11 +4,18 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine;
 using System.Runtime.CompilerServices;
 using System;
+using System.Runtime.ConstrainedExecution;
 
 /// <summary>
 /// Provides methods for high-level game actions.
 /// </summary>
 public class GameController : MonoBehaviour {
+    /// <summary>
+    /// The amount of time (in seconds) that must have passed between
+    /// two hits for them to be considered an illegal double hit.
+    /// </summary>
+    private static double DOUBLE_HIT_TOLERANCE = 0.5;
+
     public GameObject ball;
     public GameObject playMenu;
     public GameObject settingsMenu;
@@ -42,7 +49,10 @@ public class GameController : MonoBehaviour {
         ball.SetActive(true);
         ball.GetComponent<Rigidbody>().position = playMenu.transform.position;
         ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -20);
+        
         GameState.CurrentStatus = GameState.Status.PLAYING_ROUND;
+        GameState.PlayerHitLast = false;
+        GameState.MostRecentTurnChange = System.DateTime.Now;
     }
 
     public void EndRound(bool playerWon) {
@@ -65,7 +75,7 @@ public class GameController : MonoBehaviour {
 
         // Before activating the paddle, make sure it's in the correct hand.
         if (PlayerPrefs.HasKey("PaddleInLeftHand")) {
-            paddle.GetComponent<PaddleController>().leftHand = Convert.ToBoolean(
+            paddle.GetComponent<PaddleController>().LeftHand = Convert.ToBoolean(
                 PlayerPrefs.GetInt("PaddleInLeftHand")
             );
         }
@@ -78,6 +88,21 @@ public class GameController : MonoBehaviour {
         rightHand.GetComponent<XRController>().hideControllerModel = !controllersActive;
         rightHand.GetComponent<XRRayInteractor>().enabled = controllersActive;
         rightControllerUI.SetActive(controllersActive);        
+    }
+
+    public void HandleBallHit(bool playerHit) {
+        // This is a double hit, so check if it's illegal.
+        if (playerHit == GameState.PlayerHitLast) {
+            if (System.DateTime.Now.Subtract(GameState.MostRecentTurnChange).TotalSeconds 
+                > DOUBLE_HIT_TOLERANCE) {
+                EndRound(!playerHit);
+            }
+        }
+        // This is a first hit, so update the turn info.
+        else {
+            GameState.PlayerHitLast = playerHit;
+            GameState.MostRecentTurnChange = System.DateTime.Now;
+        }        
     }
 
     public void OpenSettingsMenu() {

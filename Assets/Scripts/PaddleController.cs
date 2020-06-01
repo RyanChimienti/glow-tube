@@ -1,10 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
-public class PaddleController : MonoBehaviour { 
-    public bool leftHand;
-    
+public class PaddleController : MonoBehaviour {
+    [Tooltip("The object containing the GameController script")]
+    public GameObject gameControllerObj;
+
+    /// <summary>
+    /// True if the paddle is held in the left hand; false otherwise.
+    /// </summary>
+    public bool LeftHand { get; set; }
+
     private GameObject controllerObj;
     private Rigidbody rigidbody;
 
@@ -13,8 +20,14 @@ public class PaddleController : MonoBehaviour {
     }
 
     private void OnEnable() {
-        controllerObj = leftHand ? GameObject.FindGameObjectWithTag("LeftHand") :
+        controllerObj = LeftHand ? GameObject.FindGameObjectWithTag("LeftHand") :
                                     GameObject.FindGameObjectWithTag("RightHand");
+    }
+
+    public void OnCollisionEnter(Collision collision) {
+        if (collision.collider.tag == "Ball") {
+            gameControllerObj.GetComponent<GameController>().HandleBallHit(true);
+        }
     }
 
     void FixedUpdate() {
