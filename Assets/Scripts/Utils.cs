@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,5 +23,20 @@ public class Utils
             forward = Vector3.Cross(right, axis);
         }
         return Mathf.Atan2(Vector3.Dot(v, right), Vector3.Dot(v, forward)) * RAD_TO_DEG;
+    }
+
+    /// <summary>
+    /// Debug.Log, but your string is prefaced with a more precise timestamp.
+    /// </summary>
+    public static void DebugLog(string str) {
+        Debug.Log($"[{GetSystemTimeString()}] {str}");
+    }
+
+    public static string GetSystemTimeString() {
+        return TimeToPreciseString(System.DateTime.Now);
+    }
+
+    public static string TimeToPreciseString(DateTime time) {
+        return time.ToString("H:mm:ss.fff");
     }
 }

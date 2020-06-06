@@ -10,11 +10,7 @@ using System.Runtime.ConstrainedExecution;
 /// Provides methods for high-level game actions.
 /// </summary>
 public class GameController : MonoBehaviour {
-    /// <summary>
-    /// The amount of time (in seconds) that must have passed between
-    /// two hits for them to be considered an illegal double hit.
-    /// </summary>
-    private static double DOUBLE_HIT_TOLERANCE = 0.5;
+    
 
     public GameObject ball;
     public GameObject playMenu;
@@ -43,19 +39,59 @@ public class GameController : MonoBehaviour {
     }
 
     public void StartNewRound() {
+        if (GameConstants.DEBUG_MODE) {
+            Utils.DebugLog($"Round started.");
+        }
+
         ToggleControllersActive();
 
         playMenu.SetActive(false);
+
+        ball.transform.position = playMenu.transform.position;
+        ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -1.5f);
         ball.SetActive(true);
-        ball.GetComponent<Rigidbody>().position = playMenu.transform.position;
-        ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -20);
-        
+
+        // Disable the ball's collider for 3 physics steps to prevent a strange collision that
+        // sometimes occurs between the ball and the paddle right after starting a round.
+        // (Specifically, this collision was happening after some double hit losses.)
+        ball.GetComponent<SphereCollider>().enabled = false;
+        Invoke("EnableBallCollider", Time.fixedDeltaTime * 3);
+
         GameState.CurrentStatus = GameState.Status.PLAYING_ROUND;
         GameState.PlayerHitLast = false;
         GameState.MostRecentTurnChange = System.DateTime.Now;
     }
 
+    private void ToggleControllersActive() {
+        controllersActive = !controllersActive;
+
+        // Before activating the paddle, make sure it's in the correct hand.
+        if (PlayerPrefs.HasKey("PaddleInLeftHand")) {
+            paddle.GetComponent<PaddleController>().LeftHand = Convert.ToBoolean(
+                PlayerPrefs.GetInt("PaddleInLeftHand")
+            );
+        }
+        paddle.SetActive(!controllersActive);
+
+        leftHand.GetComponent<XRController>().hideControllerModel = !controllersActive;
+        leftHand.GetComponent<XRRayInteractor>().enabled = controllersActive;
+        leftControllerUI.SetActive(controllersActive);
+
+        rightHand.GetComponent<XRController>().hideControllerModel = !controllersActive;
+        rightHand.GetComponent<XRRayInteractor>().enabled = controllersActive;
+        rightControllerUI.SetActive(controllersActive);
+    }
+
+    private void EnableBallCollider() {
+        ball.GetComponent<SphereCollider>().enabled = true;
+    }
+
     public void EndRound(bool playerWon) {
+        if (GameConstants.DEBUG_MODE) {
+            string name = playerWon ? "player" : "opponent";
+            Utils.DebugLog($"Round ended: {name} wins.");
+        }
+
         ToggleControllersActive();
 
         if (playerWon) {
@@ -68,40 +104,38 @@ public class GameController : MonoBehaviour {
         playMenu.SetActive(true);
         ball.SetActive(false);
         GameState.CurrentStatus = GameState.Status.IN_MENU;
-    }
-
-    private void ToggleControllersActive() {
-        controllersActive = !controllersActive;
-
-        // Before activating the paddle, make sure it's in the correct hand.
-        if (PlayerPrefs.HasKey("PaddleInLeftHand")) {
-            paddle.GetComponent<PaddleController>().LeftHand = Convert.ToBoolean(
-                PlayerPrefs.GetInt("PaddleInLeftHand")
-            );
-        }
-        paddle.SetActive(!controllersActive);        
-
-        leftHand.GetComponent<XRController>().hideControllerModel = !controllersActive;
-        leftHand.GetComponent<XRRayInteractor>().enabled = controllersActive;
-        leftControllerUI.SetActive(controllersActive);
-
-        rightHand.GetComponent<XRController>().hideControllerModel = !controllersActive;
-        rightHand.GetComponent<XRRayInteractor>().enabled = controllersActive;
-        rightControllerUI.SetActive(controllersActive);        
-    }
+    }    
 
     public void HandleBallHit(bool playerHit) {
-        // This is a double hit, so check if it's illegal.
         if (playerHit == GameState.PlayerHitLast) {
+            // This is a double hit, so check if it's illegal.
             if (System.DateTime.Now.Subtract(GameState.MostRecentTurnChange).TotalSeconds 
-                > DOUBLE_HIT_TOLERANCE) {
+                > GameConstants.DOUBLE_HIT_TOLERANCE) {
+
+                if (GameConstants.DEBUG_MODE) {
+                    Utils.DebugLog($"Ball hit by {(playerHit ? "player" : "opponent")}." +
+                        $" Illegal double hit!");
+                }
+
                 EndRound(!playerHit);
             }
+            else {
+                if (GameConstants.DEBUG_MODE) {
+                    Utils.DebugLog($"Ball hit by {(playerHit ? "player" : "opponent")}." +
+                        $" Technically a double hit, but it's close enough to the" +
+                        $" first hit that we just consider it part of the first hit.");
+                }
+            }
         }
-        // This is a first hit, so update the turn info.
+        
         else {
+            // This is a first hit, so update the turn info.
             GameState.PlayerHitLast = playerHit;
             GameState.MostRecentTurnChange = System.DateTime.Now;
+
+            if (GameConstants.DEBUG_MODE) {
+                Utils.DebugLog($"Ball hit by {(playerHit ? "player" : "opponent")}.");
+            }
         }        
     }
 

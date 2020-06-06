@@ -13,10 +13,10 @@ public class PaddleController : MonoBehaviour {
     public bool LeftHand { get; set; }
 
     private GameObject controllerObj;
-    private Rigidbody rigidbody;
+    private Rigidbody rb;
 
     private void Start() {
-        rigidbody = this.GetComponent<Rigidbody>();        
+        rb = this.GetComponent<Rigidbody>();        
     }
 
     private void OnEnable() {
@@ -31,8 +31,10 @@ public class PaddleController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        rigidbody.MovePosition(controllerObj.transform.position);
-        rigidbody.MoveRotation(controllerObj.transform.rotation);
-        rigidbody.velocity = Vector3.zero;
+        // We move the paddle the same way grabbed objects follow the controller
+        // in Unity XR Interaction Toolkit.
+        rb.MovePosition(controllerObj.transform.position);
+        rb.MoveRotation(controllerObj.transform.rotation);
+        rb.velocity = Vector3.zero;
     }
 }

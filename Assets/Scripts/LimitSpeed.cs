@@ -5,11 +5,14 @@ using UnityEngine;
 public class LimitSpeed : MonoBehaviour
 {
     public float maxSpeed;
+    public Rigidbody rb;
 
-    // Update is called once per frame
+    private void Start() {
+        rb = this.GetComponent<Rigidbody>();
+    }
+
     void FixedUpdate()
     {
-        Rigidbody rigidbody = this.GetComponent<Rigidbody>();
-        rigidbody.velocity = Vector3.ClampMagnitude(rigidbody.velocity, maxSpeed);
+        rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
     }
 }
