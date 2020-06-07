@@ -12,6 +12,7 @@ TagManager:
   - CameraOffset
   - LeftControllerUI
   - RightControllerUI
+  - Paddle
   layers:
   - Default
   - TransparentFX

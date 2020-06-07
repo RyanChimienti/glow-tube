@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour {
     /// True if the player is holding controllers; false if
     /// the player is holding the paddle.
     /// </summary>
-    private bool controllersActive = true;
+    private bool controllersActive = true;    
 
     public void Start() {
         GameState.CurrentStatus = GameState.Status.IN_MENU;

@@ -5,6 +5,19 @@ using UnityEngine;
 public class PulseOnBallHit : MonoBehaviour {
     public Material pulseMaterial;
     public AudioSource pulseSound;
+
+    /// <summary>
+    /// The amount of time (in seconds) that must have elapsed
+    /// since the previous pulse to have a new pulse.
+    /// </summary>
+    private static double MIN_TIME_BETWEEN_PULSES = GameConstants.DOUBLE_HIT_TOLERANCE;
+
+    /// <summary>
+    /// The last time the object pulsed. (Really, the time of the ending of the pulse.) 
+    /// We use this to discard pulses that follow previous pulses too closely.
+    /// </summary>
+    private System.DateTime lastPulseTime = System.DateTime.MinValue;
+
     private Material[] originalMaterials;
 
     private void Start() {
@@ -15,6 +28,11 @@ public class PulseOnBallHit : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision) {
         if (collision.collider.gameObject.tag == "Ball") {
+            double timeSinceLastPulse = System.DateTime.Now.Subtract(lastPulseTime).TotalSeconds;            
+            if (timeSinceLastPulse < MIN_TIME_BETWEEN_PULSES) {
+                return;
+            }
+
             MeshRenderer meshRenderer = this.GetComponent<MeshRenderer>();
             Material[] oldMats = meshRenderer.materials;
             oldMats[0] = pulseMaterial;
@@ -26,6 +44,7 @@ public class PulseOnBallHit : MonoBehaviour {
     void OnCollisionExit(Collision collision) {
         if (collision.collider.gameObject.tag == "Ball") {
             this.GetComponent<MeshRenderer>().materials = originalMaterials;
+            lastPulseTime = System.DateTime.Now;
         }
     }
 }
