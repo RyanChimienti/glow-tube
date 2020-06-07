@@ -18,9 +18,14 @@ public class GameConstants : MonoBehaviour
     public static float INITIAL_BALL_SPEED = 2f;
 
     /// <summary>
+    /// The speed the ball increases by each turn.
+    /// </summary>
+    public static float BALL_SPEED_INCREMENT = .05f;
+
+    /// <summary>
     /// The speed the opponent moves while playing a round.
     /// </summary>
-    public static float OPPONENT_PLAY_SPEED = 1f;
+    public static float OPPONENT_PLAY_SPEED = 1.2f;
 
     /// <summary>
     /// The speed the opponent moves while returning to its ready position
@@ -33,7 +38,7 @@ public class GameConstants : MonoBehaviour
     /// two hits for them to be considered an illegal double hit.
     /// If 
     /// </summary>
-    public static double DOUBLE_HIT_TOLERANCE = 0.3;
+    public static double DOUBLE_HIT_TOLERANCE = 0.35;
 
     /// <summary>
     /// If any part of the paddle exceeds this Z value, the paddle is

@@ -26,4 +26,10 @@ public static class GameState
     /// The last time the ball changed possesion.
     /// </summary>
     public static System.DateTime MostRecentTurnChange;
+
+    /// <summary>
+    /// Which turn we are on, starting with 0 and increasing each time the ball
+    /// changes possession.
+    /// </summary>
+    public static int TurnNumber;
 }

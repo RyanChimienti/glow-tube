@@ -60,6 +60,7 @@ public class GameController : MonoBehaviour {
         GameState.CurrentStatus = GameState.Status.PLAYING_ROUND;
         GameState.PlayerHitLast = false;
         GameState.MostRecentTurnChange = System.DateTime.Now;
+        GameState.TurnNumber = 0;
     }
 
     private void ToggleControllersActive() {
@@ -107,8 +108,7 @@ public class GameController : MonoBehaviour {
     }    
 
     public void HandleBallHit(bool playerHit) {
-        if (playerHit == GameState.PlayerHitLast) {
-            // This is a double hit, so check if it's illegal.
+        if (playerHit == GameState.PlayerHitLast) { // Double hit, check if allowable
             if (System.DateTime.Now.Subtract(GameState.MostRecentTurnChange).TotalSeconds 
                 > GameConstants.DOUBLE_HIT_TOLERANCE) {
 
@@ -119,7 +119,7 @@ public class GameController : MonoBehaviour {
 
                 EndRound(!playerHit);
             }
-            else {
+            else { 
                 if (GameConstants.DEBUG_MODE) {
                     Utils.DebugLog($"Ball hit by {(playerHit ? "player" : "opponent")}." +
                         $" Technically a double hit, but it's close enough to the" +
@@ -128,10 +128,10 @@ public class GameController : MonoBehaviour {
             }
         }
         
-        else {
-            // This is a first hit, so update the turn info.
+        else { // First hit, update the turn info
             GameState.PlayerHitLast = playerHit;
             GameState.MostRecentTurnChange = System.DateTime.Now;
+            GameState.TurnNumber++;
 
             if (GameConstants.DEBUG_MODE) {
                 Utils.DebugLog($"Ball hit by {(playerHit ? "player" : "opponent")}.");
