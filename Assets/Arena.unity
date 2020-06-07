@@ -679,6 +679,7 @@ GameObject:
   - component: {fileID: 407518062}
   - component: {fileID: 407518066}
   - component: {fileID: 407518067}
+  - component: {fileID: 407518068}
   m_Layer: 0
   m_Name: Opponent
   m_TagString: Untagged
@@ -754,7 +755,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407518061}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.008000017, y: 0.96362, z: 2.023}
+  m_LocalPosition: {x: -0.008000017, y: 0.96362, z: 2.644}
   m_LocalScale: {x: 0.36665085, y: 0.34148195, z: -0.028572734}
   m_Children: []
   m_Father: {fileID: 0}
@@ -787,6 +788,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameControllerObj: {fileID: 1866810451}
+  Ball: {fileID: 697055366}
+--- !u!54 &407518068
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407518061}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!1 &416710888
 GameObject:
   m_ObjectHideFlags: 0
@@ -1506,8 +1524,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4006f1a8672e1840a22551ab1dce844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 1.5
-  rb: {fileID: 0}
 --- !u!1 &705257787
 GameObject:
   m_ObjectHideFlags: 0
@@ -3465,7 +3481,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1809464867}
   m_LocalRotation: {x: -0.017648304, y: 0.7068865, z: -0.7068866, w: 0.017648611}
-  m_LocalPosition: {x: 0.137, y: 0.96, z: 2.13}
+  m_LocalPosition: {x: 0.14, y: 0.96, z: 3.3}
   m_LocalScale: {x: 0.20651737, y: 0.20651737, z: 0.2065174}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4090,7 +4106,7 @@ PrefabInstance:
     - target: {fileID: 3199308786159842809, guid: 9eb08827006d1c24aaf4ce169f73c335,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.76699996
+      value: 1.064
       objectReference: {fileID: 0}
     - target: {fileID: 3199308786159842809, guid: 9eb08827006d1c24aaf4ce169f73c335,
         type: 3}
@@ -4131,6 +4147,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199308786159842809, guid: 9eb08827006d1c24aaf4ce169f73c335,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.54633594
       objectReference: {fileID: 0}
     - target: {fileID: 3364169767716982525, guid: 9eb08827006d1c24aaf4ce169f73c335,
         type: 3}

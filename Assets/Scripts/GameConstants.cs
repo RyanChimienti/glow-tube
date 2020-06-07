@@ -10,7 +10,23 @@ public class GameConstants : MonoBehaviour
     /// <summary>
     /// If true, we log debug messages to console.
     /// </summary>
-    public static bool DEBUG_MODE = true;
+    public static bool DEBUG_MODE = false;
+
+    /// <summary>
+    /// The speed of the ball at the start of a round.
+    /// </summary>
+    public static float INITIAL_BALL_SPEED = 2f;
+
+    /// <summary>
+    /// The speed the opponent moves while playing a round.
+    /// </summary>
+    public static float OPPONENT_PLAY_SPEED = 1f;
+
+    /// <summary>
+    /// The speed the opponent moves while returning to its ready position
+    /// after a round.
+    /// </summary>
+    public static float OPPONENT_RESET_SPEED = .5f;
 
     /// <summary>
     /// The amount of time (in seconds) that must have passed between

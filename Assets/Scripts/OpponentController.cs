@@ -8,24 +8,18 @@ public class OpponentController : MonoBehaviour
     [Tooltip("The object containing the GameController script")]
     public GameObject GameControllerObj;
 
-    /// <summary>
-    /// The speed of the opponent while playing in units per second.
-    /// </summary>
-    private static float PLAY_SPEED = 0.5F;
-
-    /// <summary>
-    /// The speed of the opponent while returning to its start position in 
-    /// units per second.
-    /// </summary>
-    private static float RESET_SPEED = 0.5F;
+    [Tooltip("The ball that is being volleyed")]
+    public GameObject Ball;
 
     /// <summary>
     /// The position the opponent moves to in between rounds.
     /// </summary>
     private Vector3 readyPosition;
+    private Rigidbody rb;
 
     void Start() {
         readyPosition = this.transform.position;
+        rb = this.GetComponent<Rigidbody>();
     }
 
     private void OnCollisionEnter(Collision collision) {
@@ -45,23 +39,28 @@ public class OpponentController : MonoBehaviour
     }
 
     private void moveTowardsReadyPosition() {
-        float distanceToMove = RESET_SPEED * Time.fixedDeltaTime;
+        float distanceToMove = GameConstants.OPPONENT_RESET_SPEED * Time.fixedDeltaTime;
 
-        this.transform.position = Vector3.MoveTowards(
-            this.transform.position,
-            readyPosition,
-            distanceToMove);
+        rb.MovePosition(
+            Vector3.MoveTowards(
+                this.transform.position,
+                readyPosition,
+                distanceToMove
+            )
+        );
     }
 
     private void moveTowardsBall() {
-        GameObject ball = GameObject.FindGameObjectWithTag("Ball");
         Plane oppPlane = new Plane(new Vector3(0, 0, 1), this.transform.position);
-        Vector3 targetLocation = oppPlane.ClosestPointOnPlane(ball.transform.position);
-        float distanceToMove = PLAY_SPEED * Time.fixedDeltaTime;
+        Vector3 targetLocation = oppPlane.ClosestPointOnPlane(Ball.transform.position);
+        float distanceToMove = GameConstants.OPPONENT_PLAY_SPEED * Time.fixedDeltaTime;
 
-        this.transform.position = Vector3.MoveTowards(
-            this.transform.position,
-            targetLocation,
-            distanceToMove);
+        rb.MovePosition(
+            Vector3.MoveTowards(
+                this.transform.position,
+                targetLocation,
+                distanceToMove
+            )
+        );
     }
 }

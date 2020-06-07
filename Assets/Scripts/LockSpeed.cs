@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LimitSpeed : MonoBehaviour
+public class LockSpeed : MonoBehaviour
 {
-    public float maxSpeed;
-    public Rigidbody rb;
+    private Rigidbody rb;
 
     private void Start() {
         rb = this.GetComponent<Rigidbody>();
@@ -13,6 +12,6 @@ public class LimitSpeed : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+        rb.velocity = Vector3.Normalize(rb.velocity) * GameConstants.INITIAL_BALL_SPEED;
     }
 }
