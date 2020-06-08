@@ -32,4 +32,9 @@ public static class GameState
     /// changes possession.
     /// </summary>
     public static int TurnNumber;
+
+    /// <summary>
+    /// The number of times the ball has hit a tunnel wall in the current turn.
+    /// </summary>
+    public static int NumWallBouncesThisTurn;
 }

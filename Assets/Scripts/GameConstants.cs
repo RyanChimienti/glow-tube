@@ -41,6 +41,24 @@ public class GameConstants : MonoBehaviour
     public static double DOUBLE_HIT_TOLERANCE = 0.35;
 
     /// <summary>
+    /// If the ball hits the tunnel wall this many times on a turn, that
+    /// is an immediate loss.
+    /// </summary>
+    public static int NUM_BOUNCES_FOR_LOSS = 7;
+
+    /// <summary>
+    /// The color the ball starts at the beginning of each turn.
+    /// </summary>
+    public static Color BALL_START_COLOR = Color.white;
+
+    /// <summary>
+    /// The ball gradually turns this color as it accrues wall bounces over 
+    /// the course of a turn. It gets all the way to this color when a
+    /// loss is triggered from too many bounces.
+    /// </summary>
+    public static Color BOUNCE_LOSS_COLOR = Color.red;
+
+    /// <summary>
     /// If any part of the paddle exceeds this Z value, the paddle is
     /// disabled. (This prevents the player from reaching too far
     /// through the tunnel.) NOTE: This is not yet used.

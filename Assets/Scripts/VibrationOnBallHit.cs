@@ -28,7 +28,6 @@ public class VibrationOnBallHit : MonoBehaviour {
     private System.DateTime lastVibrationTime = System.DateTime.MinValue;
 
     private UnityEngine.XR.InputDevice _controller;
-    private bool _controllerSupportsHaptics = false;
 
     private void OnEnable() {
         bool paddleInLeftHand = System.Convert.ToBoolean(PlayerPrefs.GetInt("PaddleInLeftHand"));

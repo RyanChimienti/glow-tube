@@ -5,12 +5,13 @@ using UnityEngine;
 using System.Runtime.CompilerServices;
 using System;
 using System.Runtime.ConstrainedExecution;
+using UnityEngine.Events;
+using System.Diagnostics.Tracing;
 
 /// <summary>
 /// Provides methods for high-level game actions.
 /// </summary>
-public class GameController : MonoBehaviour {
-    
+public class GameController : MonoBehaviour { 
 
     public GameObject ball;
     public GameObject playMenu;
@@ -20,6 +21,9 @@ public class GameController : MonoBehaviour {
     public GameObject leftControllerUI;
     public GameObject rightControllerUI;
     public GameObject paddle;
+
+    [Header("Event that triggers when the ball changes possession")]
+    public UnityEvent TurnChangeEvent = new UnityEvent();
 
     /// <summary>
     /// True if the player is holding controllers; false if
@@ -104,7 +108,7 @@ public class GameController : MonoBehaviour {
 
         playMenu.SetActive(true);
         ball.SetActive(false);
-        GameState.CurrentStatus = GameState.Status.IN_MENU;
+        GameState.CurrentStatus = GameState.Status.IN_MENU;        
     }    
 
     public void HandleBallHit(bool playerHit) {
@@ -132,10 +136,13 @@ public class GameController : MonoBehaviour {
             GameState.PlayerHitLast = playerHit;
             GameState.MostRecentTurnChange = System.DateTime.Now;
             GameState.TurnNumber++;
-
+            GameState.NumWallBouncesThisTurn = 0;
+            
             if (GameConstants.DEBUG_MODE) {
                 Utils.DebugLog($"Ball hit by {(playerHit ? "player" : "opponent")}.");
             }
+
+            TurnChangeEvent.Invoke();
         }        
     }
 
