@@ -7,6 +7,11 @@ public class PulseOnBallHit : MonoBehaviour {
     public AudioSource pulseSound;
 
     /// <summary>
+    /// The length of a pulse in seconds.
+    /// </summary>
+    private static float PULSE_LENGTH = 0.1f;
+
+    /// <summary>
     /// The amount of time (in seconds) that must have elapsed
     /// since the previous pulse to have a new pulse.
     /// </summary>
@@ -38,13 +43,13 @@ public class PulseOnBallHit : MonoBehaviour {
             oldMats[0] = pulseMaterial;
             meshRenderer.materials = oldMats;
             pulseSound.Play();
+
+            Invoke("EndPulse", PULSE_LENGTH);
         }
     }
 
-    void OnCollisionExit(Collision collision) {
-        if (collision.collider.gameObject.tag == "Ball") {
+    private void EndPulse() {
             this.GetComponent<MeshRenderer>().materials = originalMaterials;
             lastPulseTime = System.DateTime.Now;
-        }
     }
 }
