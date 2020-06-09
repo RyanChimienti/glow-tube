@@ -10,7 +10,7 @@ public class GameConstants : MonoBehaviour
     /// <summary>
     /// If true, we log debug messages to console.
     /// </summary>
-    public static bool DEBUG_MODE = false;
+    public static bool DEBUG_MODE = true;
 
     /// <summary>
     /// The speed of the ball at the start of a round.
@@ -56,7 +56,7 @@ public class GameConstants : MonoBehaviour
     /// the course of a turn. It gets all the way to this color when a
     /// loss is triggered from too many bounces.
     /// </summary>
-    public static Color BOUNCE_LOSS_COLOR = Color.red;
+    public static Color BOUNCE_LOSS_COLOR = Color.magenta;
 
     /// <summary>
     /// If any part of the paddle exceeds this Z value, the paddle is

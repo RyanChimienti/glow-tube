@@ -65,5 +65,6 @@ public class BounceCountTracker : MonoBehaviour {
     private void setBallColor(Color color) {
         _ballLight.color = color;
         _ballMaterial.SetColor("_EmissionColor", color);
+        _ballMaterial.SetColor("_SpecColor", color);
     }
 }
