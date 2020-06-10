@@ -9,7 +9,8 @@ public static class GameState
 {
     public enum Status {
         IN_MENU,
-        PLAYING_ROUND
+        PLAYING_ROUND,
+        ROUND_JUST_ENDED
     }
     public static Status CurrentStatus;
     

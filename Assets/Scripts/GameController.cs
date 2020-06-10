@@ -22,6 +22,9 @@ public class GameController : MonoBehaviour {
     public GameObject rightControllerUI;
     public GameObject paddle;
 
+    [Tooltip("The prefab to use for the shattered ball.")]
+    public GameObject ShatteredBallPrefab;
+
     [Header("Event that triggers when the ball changes possession")]
     public UnityEvent TurnChangeEvent = new UnityEvent();
 
@@ -29,7 +32,13 @@ public class GameController : MonoBehaviour {
     /// True if the player is holding controllers; false if
     /// the player is holding the paddle.
     /// </summary>
-    private bool controllersActive = true;    
+    private bool _controllersActive = true;
+    
+    /// <summary>
+    /// The shattered ball game object, which is created at the end
+    /// of a round and destroyed when returning to the menu.
+    /// </summary>
+    private GameObject _shatteredBall;
 
     public void Start() {
         GameState.CurrentStatus = GameState.Status.IN_MENU;
@@ -68,7 +77,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void ToggleControllersActive() {
-        controllersActive = !controllersActive;
+        _controllersActive = !_controllersActive;
 
         // Before activating the paddle, make sure it's in the correct hand.
         if (PlayerPrefs.HasKey("PaddleInLeftHand")) {
@@ -76,15 +85,15 @@ public class GameController : MonoBehaviour {
                 PlayerPrefs.GetInt("PaddleInLeftHand")
             );
         }
-        paddle.SetActive(!controllersActive);
+        paddle.SetActive(!_controllersActive);
 
-        leftHand.GetComponent<XRController>().hideControllerModel = !controllersActive;
-        leftHand.GetComponent<XRRayInteractor>().enabled = controllersActive;
-        leftControllerUI.SetActive(controllersActive);
+        leftHand.GetComponent<XRController>().hideControllerModel = !_controllersActive;
+        leftHand.GetComponent<XRRayInteractor>().enabled = _controllersActive;
+        leftControllerUI.SetActive(_controllersActive);
 
-        rightHand.GetComponent<XRController>().hideControllerModel = !controllersActive;
-        rightHand.GetComponent<XRRayInteractor>().enabled = controllersActive;
-        rightControllerUI.SetActive(controllersActive);
+        rightHand.GetComponent<XRController>().hideControllerModel = !_controllersActive;
+        rightHand.GetComponent<XRRayInteractor>().enabled = _controllersActive;
+        rightControllerUI.SetActive(_controllersActive);
     }
 
     private void EnableBallCollider() {
@@ -95,9 +104,7 @@ public class GameController : MonoBehaviour {
         if (GameConstants.DEBUG_MODE) {
             string name = playerWon ? "player" : "opponent";
             Utils.DebugLog($"Round ended: {name} wins.");
-        }
-
-        ToggleControllersActive();
+        }        
 
         if (playerWon) {
             GameState.PlayerScore++;
@@ -105,11 +112,29 @@ public class GameController : MonoBehaviour {
         else {
             GameState.OpponentScore++;
         }
-
-        playMenu.SetActive(true);
+                
+        _shatteredBall = Instantiate(
+            ShatteredBallPrefab, 
+            ball.transform.position, 
+            Quaternion.identity
+        );
+        Vector3 ballVelocity = ball.GetComponent<Rigidbody>().velocity;
+        foreach (Rigidbody r in _shatteredBall.GetComponentsInChildren<Rigidbody>()) {
+            r.velocity = ballVelocity;
+            r.AddExplosionForce(2.0f, _shatteredBall.transform.position, 0.2f, 0, ForceMode.Impulse);
+        }
         ball.SetActive(false);
-        GameState.CurrentStatus = GameState.Status.IN_MENU;        
+
+        Invoke("ReturnToMenuAfterRound", GameConstants.RETURN_TO_MENU_DELAY);
     }    
+
+    private void ReturnToMenuAfterRound() {
+        Destroy(_shatteredBall);
+        _shatteredBall = null;
+        ToggleControllersActive();
+        playMenu.SetActive(true);        
+        GameState.CurrentStatus = GameState.Status.IN_MENU;
+    }
 
     public void HandleBallHit(bool playerHit) {
         if (playerHit == GameState.PlayerHitLast) { // Double hit, check if allowable

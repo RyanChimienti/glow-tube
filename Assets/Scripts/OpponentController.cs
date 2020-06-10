@@ -30,11 +30,14 @@ public class OpponentController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (GameState.CurrentStatus != GameState.Status.PLAYING_ROUND) {
+        if (GameState.CurrentStatus == GameState.Status.IN_MENU) {
             moveTowardsReadyPosition();
         }
-        else {
+        else if (GameState.CurrentStatus == GameState.Status.PLAYING_ROUND) {
             moveTowardsBall();
+        }
+        else if (GameState.CurrentStatus == GameState.Status.ROUND_JUST_ENDED) {
+            moveTowardsReadyPosition();
         }
     }
 

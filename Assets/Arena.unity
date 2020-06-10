@@ -3517,6 +3517,8 @@ MonoBehaviour:
   leftControllerUI: {fileID: 1434565174}
   rightControllerUI: {fileID: 2131067338}
   paddle: {fileID: 1805466845}
+  ShatteredBallPrefab: {fileID: 3240117595403738344, guid: 9e865cba85a3c304ca24eb801e3b77df,
+    type: 3}
   TurnChangeEvent:
     m_PersistentCalls:
       m_Calls:

@@ -59,6 +59,14 @@ public class GameConstants : MonoBehaviour
     public static Color BOUNCE_LOSS_COLOR = Color.magenta;
 
     /// <summary>
+    /// The time (in seconds) that we wait between the end of a round and
+    /// returning to the menu, in the ROUND_JUST_ENDED state. This time is
+    /// for end of round graphical effects (like the ball shattering) and
+    /// announcing the round outcome.
+    /// </summary>
+    public static float RETURN_TO_MENU_DELAY = 3.0f;
+
+    /// <summary>
     /// If any part of the paddle exceeds this Z value, the paddle is
     /// disabled. (This prevents the player from reaching too far
     /// through the tunnel.) NOTE: This is not yet used.
