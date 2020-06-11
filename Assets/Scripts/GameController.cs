@@ -25,6 +25,9 @@ public class GameController : MonoBehaviour {
     [Tooltip("The prefab to use for the shattered ball.")]
     public GameObject ShatteredBallPrefab;
 
+    [Tooltip("The GameObject containing the ball shatter sound AudioSource.")]
+    public GameObject BallShatterSound;
+
     [Header("Event that triggers when the ball changes possession")]
     public UnityEvent TurnChangeEvent = new UnityEvent();
 
@@ -112,10 +115,15 @@ public class GameController : MonoBehaviour {
         else {
             GameState.OpponentScore++;
         }
-                
+
+        ShatterBall();
+        Invoke("ReturnToMenuAfterRound", GameConstants.RETURN_TO_MENU_DELAY);
+    }    
+
+    private void ShatterBall() {
         _shatteredBall = Instantiate(
-            ShatteredBallPrefab, 
-            ball.transform.position, 
+            ShatteredBallPrefab,
+            ball.transform.position,
             Quaternion.identity
         );
         Vector3 ballVelocity = ball.GetComponent<Rigidbody>().velocity;
@@ -124,9 +132,9 @@ public class GameController : MonoBehaviour {
             r.AddExplosionForce(2.0f, _shatteredBall.transform.position, 0.2f, 0, ForceMode.Impulse);
         }
         ball.SetActive(false);
-
-        Invoke("ReturnToMenuAfterRound", GameConstants.RETURN_TO_MENU_DELAY);
-    }    
+        BallShatterSound.SetActive(true);
+        BallShatterSound.GetComponent<AudioSource>().Play();
+    }
 
     private void ReturnToMenuAfterRound() {
         Destroy(_shatteredBall);
