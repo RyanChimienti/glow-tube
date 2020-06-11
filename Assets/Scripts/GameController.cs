@@ -117,23 +117,26 @@ public class GameController : MonoBehaviour {
         }
 
         ShatterBall();
+        GameState.CurrentStatus = GameState.Status.ROUND_JUST_ENDED;
         Invoke("ReturnToMenuAfterRound", GameConstants.RETURN_TO_MENU_DELAY);
     }    
 
     private void ShatterBall() {
+        BallShatterSound.transform.position = ball.transform.position;
+        BallShatterSound.GetComponent<AudioSource>().Play();
+
         _shatteredBall = Instantiate(
             ShatteredBallPrefab,
             ball.transform.position,
             Quaternion.identity
-        );
+        );        
+
         Vector3 ballVelocity = ball.GetComponent<Rigidbody>().velocity;
         foreach (Rigidbody r in _shatteredBall.GetComponentsInChildren<Rigidbody>()) {
             r.velocity = ballVelocity;
             r.AddExplosionForce(2.0f, _shatteredBall.transform.position, 0.2f, 0, ForceMode.Impulse);
         }
-        ball.SetActive(false);
-        BallShatterSound.SetActive(true);
-        BallShatterSound.GetComponent<AudioSource>().Play();
+        ball.SetActive(false);        
     }
 
     private void ReturnToMenuAfterRound() {
