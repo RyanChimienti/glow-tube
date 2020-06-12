@@ -25,8 +25,8 @@ public class GameController : MonoBehaviour {
     [Tooltip("The prefab to use for the shattered ball.")]
     public GameObject ShatteredBallPrefab;
 
-    [Tooltip("The GameObject containing the ball shatter sound AudioSource.")]
-    public GameObject BallShatterSound;
+    [Tooltip("The GameObject containing (in its children) the ball shatter sound and particles.")]
+    public GameObject BallShatterEffects;
 
     [Header("Event that triggers when the ball changes possession")]
     public UnityEvent TurnChangeEvent = new UnityEvent();
@@ -122,8 +122,9 @@ public class GameController : MonoBehaviour {
     }    
 
     private void ShatterBall() {
-        BallShatterSound.transform.position = ball.transform.position;
-        BallShatterSound.GetComponent<AudioSource>().Play();
+        BallShatterEffects.transform.position = ball.transform.position;
+        BallShatterEffects.GetComponentInChildren<AudioSource>().Play();
+        BallShatterEffects.GetComponentInChildren<ParticleSystem>().Play();
 
         _shatteredBall = Instantiate(
             ShatteredBallPrefab,
