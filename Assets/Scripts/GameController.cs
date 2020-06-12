@@ -12,7 +12,6 @@ using System.Diagnostics.Tracing;
 /// Provides methods for high-level game actions.
 /// </summary>
 public class GameController : MonoBehaviour { 
-
     public GameObject ball;
     public GameObject playMenu;
     public GameObject settingsMenu;
@@ -21,6 +20,7 @@ public class GameController : MonoBehaviour {
     public GameObject leftControllerUI;
     public GameObject rightControllerUI;
     public GameObject paddle;
+    public GameObject announcer;
 
     [Tooltip("The prefab to use for the shattered ball.")]
     public GameObject ShatteredBallPrefab;
@@ -119,6 +119,7 @@ public class GameController : MonoBehaviour {
         ShatterBall(GameConstants.BALL_SHATTER_COLORS[reason]);
         GameState.CurrentStatus = GameState.Status.ROUND_JUST_ENDED;
         Invoke("ReturnToMenuAfterRound", GameConstants.RETURN_TO_MENU_DELAY);
+        announcer.GetComponent<AnnouncerController>().OnEndRound(playerWon, reason);
     }    
 
     private void ShatterBall(Color shatterColor) {
