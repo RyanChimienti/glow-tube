@@ -19,7 +19,7 @@ public class DetectLetThrough : MonoBehaviour {
 
     void OnTriggerEnter(Collider otherCollider) {
         if (otherCollider.gameObject.tag == "Ball") {
-            GameControllerObj.GetComponent<GameController>().EndRound(!IsForPlayer);
+            GameControllerObj.GetComponent<GameController>().EndRound(!IsForPlayer, OutcomeReason.LET_THROUGH);
         }    
     }
 }

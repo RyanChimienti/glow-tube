@@ -5,8 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Holds the state for the game as static instance variables.
 /// </summary>
-public static class GameState
-{
+public static class GameState {
     public enum Status {
         IN_MENU,
         PLAYING_ROUND,

@@ -45,13 +45,13 @@ public class BounceCountTracker : MonoBehaviour {
             GameState.NumWallBouncesThisTurn++;
 
             if (GameState.NumWallBouncesThisTurn == GameConstants.NUM_BOUNCES_FOR_LOSS) {
-                _gameController.EndRound(!GameState.PlayerHitLast);
+                _gameController.EndRound(!GameState.PlayerHitLast, OutcomeReason.BOUNCE_LOSS);
             }
             else {
                 float percentageOfBounceLimit = (float)GameState.NumWallBouncesThisTurn / GameConstants.NUM_BOUNCES_FOR_LOSS;
                 setBallColor(Color.Lerp(
                     GameConstants.BALL_START_COLOR,
-                    GameConstants.BOUNCE_LOSS_COLOR,
+                    GameConstants.BALL_SHATTER_COLORS[OutcomeReason.BOUNCE_LOSS],
                     percentageOfBounceLimit));
             }            
         }        

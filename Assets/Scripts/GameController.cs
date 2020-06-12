@@ -103,7 +103,7 @@ public class GameController : MonoBehaviour {
         ball.GetComponent<SphereCollider>().enabled = true;
     }
 
-    public void EndRound(bool playerWon) {
+    public void EndRound(bool playerWon, OutcomeReason reason) {
         if (GameConstants.DEBUG_MODE) {
             string name = playerWon ? "player" : "opponent";
             Utils.DebugLog($"Round ended: {name} wins.");
@@ -116,21 +116,31 @@ public class GameController : MonoBehaviour {
             GameState.OpponentScore++;
         }
 
-        ShatterBall();
+        ShatterBall(GameConstants.BALL_SHATTER_COLORS[reason]);
         GameState.CurrentStatus = GameState.Status.ROUND_JUST_ENDED;
         Invoke("ReturnToMenuAfterRound", GameConstants.RETURN_TO_MENU_DELAY);
     }    
 
-    private void ShatterBall() {
+    private void ShatterBall(Color shatterColor) {
         BallShatterEffects.transform.position = ball.transform.position;
         BallShatterEffects.GetComponentInChildren<AudioSource>().Play();
-        BallShatterEffects.GetComponentInChildren<ParticleSystem>().Play();
+
+        ParticleSystem particleSys = BallShatterEffects.GetComponentInChildren<ParticleSystem>();
+        ParticleSystem.MainModule mainMod = particleSys.main;
+        ParticleSystem.TrailModule trailMod = particleSys.trails;
+        mainMod.startColor = shatterColor;
+        trailMod.colorOverTrail = shatterColor;
+        particleSys.Play();
 
         _shatteredBall = Instantiate(
             ShatteredBallPrefab,
             ball.transform.position,
             Quaternion.identity
-        );        
+        );
+
+        foreach (MeshRenderer renderer in _shatteredBall.GetComponentsInChildren<MeshRenderer>()) {
+            renderer.material.SetColor("_Color", shatterColor);
+        }
 
         Vector3 ballVelocity = ball.GetComponent<Rigidbody>().velocity;
         foreach (Rigidbody r in _shatteredBall.GetComponentsInChildren<Rigidbody>()) {
@@ -158,7 +168,7 @@ public class GameController : MonoBehaviour {
                         $" Illegal double hit!");
                 }
 
-                EndRound(!playerHit);
+                EndRound(!playerHit, OutcomeReason.DOUBLE_HIT);
             }
             else { 
                 if (GameConstants.DEBUG_MODE) {

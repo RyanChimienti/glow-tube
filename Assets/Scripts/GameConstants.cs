@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Holds game values that do not change.
 /// </summary>
-public class GameConstants : MonoBehaviour
+public class GameConstants
 {
     /// <summary>
     /// If true, we log debug messages to console.
@@ -52,11 +52,14 @@ public class GameConstants : MonoBehaviour
     public static Color BALL_START_COLOR = Color.white;
 
     /// <summary>
-    /// The ball gradually turns this color as it accrues wall bounces over 
-    /// the course of a turn. It gets all the way to this color when a
-    /// loss is triggered from too many bounces.
+    /// The color of the ball when it shatters for various reasons.
     /// </summary>
-    public static Color BOUNCE_LOSS_COLOR = Color.magenta;
+    public static IReadOnlyDictionary<OutcomeReason, Color> BALL_SHATTER_COLORS
+    = new Dictionary<OutcomeReason, Color> {
+           { OutcomeReason.BOUNCE_LOSS, Color.magenta },
+           { OutcomeReason.DOUBLE_HIT, Color.yellow },
+           { OutcomeReason.LET_THROUGH, Color.cyan }
+    };
 
     /// <summary>
     /// The time (in seconds) that we wait between the end of a round and
