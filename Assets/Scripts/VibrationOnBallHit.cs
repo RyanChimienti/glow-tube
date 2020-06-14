@@ -17,12 +17,6 @@ public class VibrationOnBallHit : MonoBehaviour {
     private static float VIBRATION_AMPLITUDE = 0.5f;
 
     /// <summary>
-    /// The amount of time (in seconds) that must have elapsed
-    /// since the previous vibration to have a new vibration.
-    /// </summary>
-    private static double MIN_TIME_BETWEEN_VIBRATIONS = GameConstants.DOUBLE_HIT_TOLERANCE;
-
-    /// <summary>
     /// The last time the controller vibrated.
     /// </summary>
     private System.DateTime lastVibrationTime = System.DateTime.MinValue;
@@ -51,13 +45,8 @@ public class VibrationOnBallHit : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter(Collision collision) {
-        if (collision.collider.gameObject.tag == "Ball") {
-            double timeSinceLastVibration = System.DateTime.Now.Subtract(lastVibrationTime).TotalSeconds;
-            if (timeSinceLastVibration < MIN_TIME_BETWEEN_VIBRATIONS) {
-                return;
-            }
-
+    public void OnTurnChange(bool isPlayersTurn) {
+        if (isPlayersTurn) {
             _controller.SendHapticImpulse(0, VIBRATION_AMPLITUDE, VIBRATION_DURATION);
             lastVibrationTime = System.DateTime.Now;
         }        

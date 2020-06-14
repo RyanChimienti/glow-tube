@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine;
 using System.Runtime.CompilerServices;
 using System;
@@ -11,15 +10,11 @@ using System.Diagnostics.Tracing;
 /// <summary>
 /// Provides methods for high-level game actions.
 /// </summary>
-public class GameController : MonoBehaviour { 
+public class RoundManager : MonoBehaviour { 
     public GameObject ball;
     public GameObject playMenu;
     public GameObject settingsMenu;
-    public GameObject leftHand;
-    public GameObject rightHand;
-    public GameObject leftControllerUI;
-    public GameObject rightControllerUI;
-    public GameObject paddle;
+    public HandsManager handsManager;
     public GameObject announcer;
 
     [Tooltip("The prefab to use for the shattered ball.")]
@@ -28,14 +23,8 @@ public class GameController : MonoBehaviour {
     [Tooltip("The GameObject containing (in its children) the ball shatter sound and particles.")]
     public GameObject BallShatterEffects;
 
-    [Header("Event that triggers when the ball changes possession")]
-    public UnityEvent TurnChangeEvent = new UnityEvent();
-
-    /// <summary>
-    /// True if the player is holding controllers; false if
-    /// the player is holding the paddle.
-    /// </summary>
-    private bool _controllersActive = true;
+    [Header("Triggers when a new round starts.")]
+    public UnityEvent RoundStartEvent = new UnityEvent();
     
     /// <summary>
     /// The shattered ball game object, which is created at the end
@@ -47,19 +36,22 @@ public class GameController : MonoBehaviour {
         GameState.CurrentStatus = GameState.Status.IN_MENU;
         GameState.PlayerScore = 0;
         GameState.OpponentScore = 0;
-
-        paddle.SetActive(false);
+        
         ball.SetActive(false);
         playMenu.SetActive(true);
         settingsMenu.SetActive(false);
     }
 
-    public void StartNewRound() {
+    public void OnPlayRoundButtonPress() {
+        StartNewRound();
+    }
+
+    private void StartNewRound() {
         if (GameConstants.DEBUG_MODE) {
             Utils.DebugLog($"Round started.");
         }
 
-        ToggleControllersActive();
+        handsManager.ToggleControllersActive();
 
         playMenu.SetActive(false);
 
@@ -74,36 +66,27 @@ public class GameController : MonoBehaviour {
         Invoke("EnableBallCollider", Time.fixedDeltaTime * 3);
 
         GameState.CurrentStatus = GameState.Status.PLAYING_ROUND;
-        GameState.PlayerHitLast = false;
-        GameState.MostRecentTurnChange = System.DateTime.Now;
-        GameState.TurnNumber = 0;
-    }
 
-    private void ToggleControllersActive() {
-        _controllersActive = !_controllersActive;
-
-        // Before activating the paddle, make sure it's in the correct hand.
-        if (PlayerPrefs.HasKey("PaddleInLeftHand")) {
-            paddle.GetComponent<PaddleController>().LeftHand = Convert.ToBoolean(
-                PlayerPrefs.GetInt("PaddleInLeftHand")
-            );
-        }
-        paddle.SetActive(!_controllersActive);
-
-        leftHand.GetComponent<XRController>().hideControllerModel = !_controllersActive;
-        leftHand.GetComponent<XRRayInteractor>().enabled = _controllersActive;
-        leftControllerUI.SetActive(_controllersActive);
-
-        rightHand.GetComponent<XRController>().hideControllerModel = !_controllersActive;
-        rightHand.GetComponent<XRRayInteractor>().enabled = _controllersActive;
-        rightControllerUI.SetActive(_controllersActive);
-    }
+        RoundStartEvent.Invoke();
+    }    
 
     private void EnableBallCollider() {
         ball.GetComponent<SphereCollider>().enabled = true;
     }
 
-    public void EndRound(bool playerWon, OutcomeReason reason) {
+    public void OnBounceLimitExceeded(bool isForPlayer) {
+        EndRound(!isForPlayer, OutcomeReason.BOUNCE_LOSS);
+    }
+
+    public void OnDoubleHit(bool isForPlayer) {
+        EndRound(!isForPlayer, OutcomeReason.DOUBLE_HIT);
+    }
+
+    public void OnLetThrough(bool isForPlayer) {
+        EndRound(!isForPlayer, OutcomeReason.LET_THROUGH);
+    }
+
+    private void EndRound(bool playerWon, OutcomeReason reason) {
         if (GameConstants.DEBUG_MODE) {
             string name = playerWon ? "player" : "opponent";
             Utils.DebugLog($"Round ended: {name} wins.");
@@ -154,44 +137,9 @@ public class GameController : MonoBehaviour {
     private void ReturnToMenuAfterRound() {
         Destroy(_shatteredBall);
         _shatteredBall = null;
-        ToggleControllersActive();
+        handsManager.ToggleControllersActive();
         playMenu.SetActive(true);        
         GameState.CurrentStatus = GameState.Status.IN_MENU;
-    }
-
-    public void HandleBallHit(bool playerHit) {
-        if (playerHit == GameState.PlayerHitLast) { // Double hit, check if allowable
-            if (System.DateTime.Now.Subtract(GameState.MostRecentTurnChange).TotalSeconds 
-                > GameConstants.DOUBLE_HIT_TOLERANCE) {
-
-                if (GameConstants.DEBUG_MODE) {
-                    Utils.DebugLog($"Ball hit by {(playerHit ? "player" : "opponent")}." +
-                        $" Illegal double hit!");
-                }
-
-                EndRound(!playerHit, OutcomeReason.DOUBLE_HIT);
-            }
-            else { 
-                if (GameConstants.DEBUG_MODE) {
-                    Utils.DebugLog($"Ball hit by {(playerHit ? "player" : "opponent")}." +
-                        $" Technically a double hit, but it's close enough to the" +
-                        $" first hit that we just consider it part of the first hit.");
-                }
-            }
-        }
-        
-        else { // First hit, update the turn info
-            GameState.PlayerHitLast = playerHit;
-            GameState.MostRecentTurnChange = System.DateTime.Now;
-            GameState.TurnNumber++;
-            GameState.NumWallBouncesThisTurn = 0;
-            
-            if (GameConstants.DEBUG_MODE) {
-                Utils.DebugLog($"Ball hit by {(playerHit ? "player" : "opponent")}.");
-            }
-
-            TurnChangeEvent.Invoke();
-        }        
     }
 
     public void OpenSettingsMenu() {

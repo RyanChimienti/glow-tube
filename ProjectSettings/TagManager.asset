@@ -13,6 +13,7 @@ TagManager:
   - LeftControllerUI
   - RightControllerUI
   - Paddle
+  - Opponent
   layers:
   - Default
   - TransparentFX

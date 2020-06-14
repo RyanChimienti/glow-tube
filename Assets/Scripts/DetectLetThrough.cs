@@ -2,9 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+[System.Serializable]
+public class LetThroughEvent : UnityEvent<bool> {}
 
 public class DetectLetThrough : MonoBehaviour {
-    public GameObject GameControllerObj;
+    [Header("The argument is true if the let through was on the player's side.")]
+    [SerializeField]
+    public LetThroughEvent LetThroughEvent = new LetThroughEvent();
 
     /**
      * True if detecting the player's let through; false if detecting
@@ -19,7 +25,7 @@ public class DetectLetThrough : MonoBehaviour {
 
     void OnTriggerEnter(Collider otherCollider) {
         if (otherCollider.gameObject.tag == "Ball") {
-            GameControllerObj.GetComponent<GameController>().EndRound(!IsForPlayer, OutcomeReason.LET_THROUGH);
+            LetThroughEvent.Invoke(IsForPlayer);
         }    
     }
 }

@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControlBallSpeed : MonoBehaviour
-{
-    private Rigidbody rb;
+public class ControlBallSpeed : MonoBehaviour {
+    private Rigidbody _rb;
+    private float _speed;
 
-    private void Start() {
-        rb = this.GetComponent<Rigidbody>();
+    private void Awake() {
+        _rb = this.GetComponent<Rigidbody>();        
     }
 
-    void FixedUpdate()
-    {
-        float desiredSpeed = GameConstants.INITIAL_BALL_SPEED
-            + GameConstants.BALL_SPEED_INCREMENT * GameState.TurnNumber;
-        rb.velocity = Vector3.Normalize(rb.velocity) * desiredSpeed; 
-            
+    public void OnRoundStart() {
+        _speed = GameConstants.INITIAL_BALL_SPEED;
+    }
+
+    public void OnTurnChange(bool isPlayersTurn) {
+        _speed += GameConstants.BALL_SPEED_INCREMENT;
+    }
+
+    void FixedUpdate() {
+        _rb.velocity = Vector3.Normalize(_rb.velocity) * _speed;            
     }
 }

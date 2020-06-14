@@ -44,12 +44,13 @@ public class PulseOnBallHit : MonoBehaviour {
             meshRenderer.materials = oldMats;
             pulseSound.Play();
 
+            lastPulseTime = System.DateTime.Now;
+
             Invoke("EndPulse", PULSE_LENGTH);
         }
     }
 
     private void EndPulse() {
-            this.GetComponent<MeshRenderer>().materials = originalMaterials;
-            lastPulseTime = System.DateTime.Now;
+            this.GetComponent<MeshRenderer>().materials = originalMaterials;            
     }
 }

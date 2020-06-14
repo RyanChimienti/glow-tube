@@ -22,12 +22,6 @@ public class OpponentController : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
     }
 
-    private void OnCollisionEnter(Collision collision) {
-        if (collision.collider.tag == "Ball") {
-            GameControllerObj.GetComponent<GameController>().HandleBallHit(false);
-        }
-    }
-
     void FixedUpdate()
     {
         if (GameState.CurrentStatus == GameState.Status.IN_MENU) {

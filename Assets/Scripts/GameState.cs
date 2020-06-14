@@ -15,26 +15,4 @@ public static class GameState {
     
     public static int PlayerScore;
     public static int OpponentScore;
-    
-    /// <summary>
-    /// True if the player was the last one to touch the ball; false if it
-    /// was the opponent.
-    /// </summary>
-    public static bool PlayerHitLast;
-
-    /// <summary>
-    /// The last time the ball changed possesion.
-    /// </summary>
-    public static System.DateTime MostRecentTurnChange;
-
-    /// <summary>
-    /// Which turn we are on, starting with 0 and increasing each time the ball
-    /// changes possession.
-    /// </summary>
-    public static int TurnNumber;
-
-    /// <summary>
-    /// The number of times the ball has hit a tunnel wall in the current turn.
-    /// </summary>
-    public static int NumWallBouncesThisTurn;
 }
