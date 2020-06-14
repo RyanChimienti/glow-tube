@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingsMenuController : MonoBehaviour {
+public class SettingsMenuManager : MonoBehaviour {
     public GameObject paddleInLeftHandToggle;
 
     public void SetPaddleInLeftHand(bool left) {

@@ -62,10 +62,15 @@ public class GameConstants
     };
 
     /// <summary>
+    /// The time (in seconds) that we wait after the end of a round before
+    /// auditorily announcing the outcome.
+    /// </summary>
+    public static float OUTCOME_ANNOUNCEMENT_DELAY = 1.0f;
+
+    /// <summary>
     /// The time (in seconds) that we wait between the end of a round and
-    /// returning to the menu, in the ROUND_JUST_ENDED state. This time is
-    /// for end of round graphical effects (like the ball shattering) and
-    /// announcing the round outcome.
+    /// returning to the menu. This time is for end of round graphical effects 
+    /// (like the ball shattering) and announcing the round outcome.
     /// </summary>
     public static float RETURN_TO_MENU_DELAY = 3.0f;
 

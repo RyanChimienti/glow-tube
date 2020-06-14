@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayMenuController : MonoBehaviour {
+public class PlayMenuManager : MonoBehaviour {
     public GameObject ScoreText;
 
     void Start() {

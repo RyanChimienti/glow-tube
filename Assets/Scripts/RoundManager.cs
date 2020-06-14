@@ -7,15 +7,14 @@ using System.Runtime.ConstrainedExecution;
 using UnityEngine.Events;
 using System.Diagnostics.Tracing;
 
+[System.Serializable]
+public class RoundEndEvent : UnityEvent<bool, OutcomeReason> {}
+
 /// <summary>
 /// Provides methods for high-level game actions.
 /// </summary>
 public class RoundManager : MonoBehaviour { 
     public GameObject ball;
-    public GameObject playMenu;
-    public GameObject settingsMenu;
-    public HandsManager handsManager;
-    public GameObject announcer;
 
     [Tooltip("The prefab to use for the shattered ball.")]
     public GameObject ShatteredBallPrefab;
@@ -25,7 +24,10 @@ public class RoundManager : MonoBehaviour {
 
     [Header("Triggers when a new round starts.")]
     public UnityEvent RoundStartEvent = new UnityEvent();
-    
+
+    [Header("Triggers when a round ends (the moment the outcome is known).")]
+    public RoundEndEvent RoundEndEvent = new RoundEndEvent();
+
     /// <summary>
     /// The shattered ball game object, which is created at the end
     /// of a round and destroyed when returning to the menu.
@@ -38,8 +40,6 @@ public class RoundManager : MonoBehaviour {
         GameState.OpponentScore = 0;
         
         ball.SetActive(false);
-        playMenu.SetActive(true);
-        settingsMenu.SetActive(false);
     }
 
     public void OnPlayRoundButtonPress() {
@@ -51,11 +51,7 @@ public class RoundManager : MonoBehaviour {
             Utils.DebugLog($"Round started.");
         }
 
-        handsManager.ToggleControllersActive();
-
-        playMenu.SetActive(false);
-
-        ball.transform.position = playMenu.transform.position;
+        ball.transform.position = new Vector3(0f, .9f, 1f);
         ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -1.5f);
         ball.SetActive(true);
 
@@ -89,8 +85,11 @@ public class RoundManager : MonoBehaviour {
     private void EndRound(bool playerWon, OutcomeReason reason) {
         if (GameConstants.DEBUG_MODE) {
             string name = playerWon ? "player" : "opponent";
-            Utils.DebugLog($"Round ended: {name} wins.");
-        }        
+            string reasonStr = reason.ToReadableString();
+            Utils.DebugLog($"Round ended: {name} wins because of {reasonStr}.");
+        }
+
+        RoundEndEvent.Invoke(playerWon, reason);
 
         if (playerWon) {
             GameState.PlayerScore++;
@@ -102,7 +101,6 @@ public class RoundManager : MonoBehaviour {
         ShatterBall(GameConstants.BALL_SHATTER_COLORS[reason]);
         GameState.CurrentStatus = GameState.Status.ROUND_JUST_ENDED;
         Invoke("ReturnToMenuAfterRound", GameConstants.RETURN_TO_MENU_DELAY);
-        announcer.GetComponent<AnnouncerController>().OnEndRound(playerWon, reason);
     }    
 
     private void ShatterBall(Color shatterColor) {
@@ -136,19 +134,7 @@ public class RoundManager : MonoBehaviour {
 
     private void ReturnToMenuAfterRound() {
         Destroy(_shatteredBall);
-        _shatteredBall = null;
-        handsManager.ToggleControllersActive();
-        playMenu.SetActive(true);        
+        _shatteredBall = null;       
         GameState.CurrentStatus = GameState.Status.IN_MENU;
-    }
-
-    public void OpenSettingsMenu() {
-        playMenu.SetActive(false);
-        settingsMenu.SetActive(true);
-    }
-
-    public void OpenPlayMenu() {
-        playMenu.SetActive(true);
-        settingsMenu.SetActive(false);
     }
 }

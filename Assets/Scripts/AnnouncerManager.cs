@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnnouncerController : MonoBehaviour {
+public class AnnouncerManager : MonoBehaviour {
     public AudioSource PlayerWinBounces;
     public AudioSource PlayerLoseBounces;
     public AudioSource PlayerWinLetThrough;
@@ -10,13 +10,7 @@ public class AnnouncerController : MonoBehaviour {
     public AudioSource PlayerWinDoubleHit;
     public AudioSource PlayerLoseDoubleHit;
 
-    /// <summary>
-    /// The amount of time we wait after the end of a round to announce
-    /// the outcome.
-    /// </summary>
-    private static float OUTCOME_DELAY = 1; 
-
-    public void OnEndRound(bool playerWin, OutcomeReason reason) {
+    public void OnRoundEnd(bool playerWin, OutcomeReason reason) {
         AudioSource announcement;
 
         if (reason == OutcomeReason.BOUNCE_LOSS) {
@@ -32,6 +26,6 @@ public class AnnouncerController : MonoBehaviour {
             throw new System.Exception("Outcome reason not recognized.");
         }
 
-        announcement.PlayDelayed(OUTCOME_DELAY);        
+        announcement.PlayDelayed(GameConstants.OUTCOME_ANNOUNCEMENT_DELAY); 
     }
 }

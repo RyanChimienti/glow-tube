@@ -20,8 +20,17 @@ public class HandsManager : MonoBehaviour {
         paddle.SetActive(false);
     }
 
-    public void ToggleControllersActive() {
-        SetControllersActive(!_controllersActive);
+    public void OnRoundStart() {
+        SetControllersActive(false);
+    }
+
+    public void OnRoundEnd(bool playerWon, OutcomeReason reason) {
+        StartCoroutine(SetControllersActiveDelayed(GameConstants.RETURN_TO_MENU_DELAY, true));
+    }
+
+    private IEnumerator SetControllersActiveDelayed(float delay, bool active) {
+        yield return new WaitForSeconds(delay);
+        SetControllersActive(active);
     }
 
     private void SetControllersActive(bool active) {
