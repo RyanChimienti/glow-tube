@@ -3,55 +3,58 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Reposition : MonoBehaviour {
-    public void Update() {
-        // We can't reposition unless we're in the menu.
-        if (GameState.CurrentStatus != GameState.Status.IN_MENU) {
-            return;
-        }
+    private bool _repositionAllowed;
+    private bool _repositioningLeft;
+    private bool _repositioningRight;
 
-        bool rightHandRepositioning = SecondaryButtonIsPressed(false);
-        if (rightHandRepositioning) {
-            MoveArena(false);
-            return;
-        }
+    private void Awake() {
+        _repositionAllowed = true;
+        _repositioningLeft = false;
+        _repositioningRight = false;
+    }
 
-        bool leftHandRepositioning = SecondaryButtonIsPressed(true);
-        if (leftHandRepositioning) {
-            MoveArena(true);
+    public void OnHandsChange(bool controllersActive) {
+        // Reposition is only allowed when the controllers are held,
+        // since the reposition buttons are on the controllers.
+        _repositionAllowed = controllersActive;
+        
+        if (!controllersActive) {
+            _repositioningLeft = false;
+            _repositioningRight = false;
         }
     }
 
-    /// <summary>
-    /// Returns whether the secondary button is pressed on the left or right
-    /// controller (Y or B respectively on the Quest).
-    /// </summary>
-    private bool SecondaryButtonIsPressed(bool left) {
-        var controllers = new List<UnityEngine.XR.InputDevice>();
-        UnityEngine.XR.InputDevices.GetDevicesAtXRNode(
-            left ? UnityEngine.XR.XRNode.LeftHand : UnityEngine.XR.XRNode.RightHand,
-            controllers
-        );
-
-        if (controllers.Count == 0) {
-            return false;
+    public void OnLeftSecondaryButtonDown() {
+        if (_repositionAllowed) {
+            _repositioningLeft = true;
         }
-        if (controllers.Count > 1) {
-            string handType = left ? "left" : "right";
-            throw new System.Exception($"Error: Found multiple {handType} hands.");
+    }
+
+    public void OnLeftSecondaryButtonUp() {
+        _repositioningLeft = false;
+    }
+
+    public void OnRightSecondaryButtonDown() {
+        if (_repositionAllowed) {
+            _repositioningRight = true;
+        }
+    }
+
+    public void OnRightSecondaryButtonUp() {
+        _repositioningRight = false;
+    }
+
+    public void FixedUpdate() {
+        if (!_repositionAllowed) {
+            return;
         }
 
-        UnityEngine.XR.InputDevice controller = controllers[0];
-
-        bool secondaryButtonValue;
-        if (controller.TryGetFeatureValue(
-                UnityEngine.XR.CommonUsages.secondaryButton,
-                out secondaryButtonValue
-           )
-            && secondaryButtonValue
-        ) {
-            return true;
+        if (_repositioningRight) {
+            MoveArena(false);
         }
-        return false;
+        else if (_repositioningLeft) {
+            MoveArena(true);
+        }
     }
 
     /// <summary>
@@ -99,7 +102,6 @@ public class Reposition : MonoBehaviour {
         foreach (Collider col in colliders) {
             boundingBox.Encapsulate(col.bounds);
         }
-        Debug.DrawLine(boundingBox.min, boundingBox.max, Color.red);
         return boundingBox;
     }
 }

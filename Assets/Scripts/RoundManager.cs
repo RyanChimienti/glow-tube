@@ -16,29 +16,13 @@ public class RoundEndEvent : UnityEvent<bool, OutcomeReason> {}
 public class RoundManager : MonoBehaviour { 
     public GameObject ball;
 
-    [Tooltip("The prefab to use for the shattered ball.")]
-    public GameObject ShatteredBallPrefab;
-
-    [Tooltip("The GameObject containing (in its children) the ball shatter sound and particles.")]
-    public GameObject BallShatterEffects;
-
     [Header("Triggers when a new round starts.")]
     public UnityEvent RoundStartEvent = new UnityEvent();
 
     [Header("Triggers when a round ends (the moment the outcome is known).")]
     public RoundEndEvent RoundEndEvent = new RoundEndEvent();
 
-    /// <summary>
-    /// The shattered ball game object, which is created at the end
-    /// of a round and destroyed when returning to the menu.
-    /// </summary>
-    private GameObject _shatteredBall;
-
-    public void Start() {
-        GameState.CurrentStatus = GameState.Status.IN_MENU;
-        GameState.PlayerScore = 0;
-        GameState.OpponentScore = 0;
-        
+    public void Start() {        
         ball.SetActive(false);
     }
 
@@ -60,8 +44,6 @@ public class RoundManager : MonoBehaviour {
         // (Specifically, this collision was happening after some double hit losses.)
         ball.GetComponent<SphereCollider>().enabled = false;
         Invoke("EnableBallCollider", Time.fixedDeltaTime * 3);
-
-        GameState.CurrentStatus = GameState.Status.PLAYING_ROUND;
 
         RoundStartEvent.Invoke();
     }    
@@ -90,51 +72,5 @@ public class RoundManager : MonoBehaviour {
         }
 
         RoundEndEvent.Invoke(playerWon, reason);
-
-        if (playerWon) {
-            GameState.PlayerScore++;
-        }
-        else {
-            GameState.OpponentScore++;
-        }
-
-        ShatterBall(GameConstants.BALL_SHATTER_COLORS[reason]);
-        GameState.CurrentStatus = GameState.Status.ROUND_JUST_ENDED;
-        Invoke("ReturnToMenuAfterRound", GameConstants.RETURN_TO_MENU_DELAY);
-    }    
-
-    private void ShatterBall(Color shatterColor) {
-        BallShatterEffects.transform.position = ball.transform.position;
-        BallShatterEffects.GetComponentInChildren<AudioSource>().Play();
-
-        ParticleSystem particleSys = BallShatterEffects.GetComponentInChildren<ParticleSystem>();
-        ParticleSystem.MainModule mainMod = particleSys.main;
-        ParticleSystem.TrailModule trailMod = particleSys.trails;
-        mainMod.startColor = shatterColor;
-        trailMod.colorOverTrail = shatterColor;
-        particleSys.Play();
-
-        _shatteredBall = Instantiate(
-            ShatteredBallPrefab,
-            ball.transform.position,
-            Quaternion.identity
-        );
-
-        foreach (MeshRenderer renderer in _shatteredBall.GetComponentsInChildren<MeshRenderer>()) {
-            renderer.material.SetColor("_Color", shatterColor);
-        }
-
-        Vector3 ballVelocity = ball.GetComponent<Rigidbody>().velocity;
-        foreach (Rigidbody r in _shatteredBall.GetComponentsInChildren<Rigidbody>()) {
-            r.velocity = ballVelocity;
-            r.AddExplosionForce(2.0f, _shatteredBall.transform.position, 0.2f, 0, ForceMode.Impulse);
-        }
-        ball.SetActive(false);        
-    }
-
-    private void ReturnToMenuAfterRound() {
-        Destroy(_shatteredBall);
-        _shatteredBall = null;       
-        GameState.CurrentStatus = GameState.Status.IN_MENU;
-    }
+    }  
 }

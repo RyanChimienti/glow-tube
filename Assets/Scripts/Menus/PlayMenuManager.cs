@@ -4,26 +4,31 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayMenuManager : MonoBehaviour {
-    public GameObject ScoreText;
-
-    void Start() {
-        ScoreText.GetComponent<Text>().text = $"Ready?";
-    }
+    /// <summary>
+    /// The Text component in the UI where the score should be displayed.
+    /// </summary>
+    public Text ScoreText;
+    
+    /// <summary>
+    /// The scorekeeper script.
+    /// </summary>
+    public ScorekeeperManager Scorekeeper;
 
     private void OnEnable() {
-        int playerScore = GameState.PlayerScore;
-        int oppScore = GameState.OpponentScore;
+        int playerScore = Scorekeeper.PlayerScore;
+        int oppScore = Scorekeeper.OpponentScore;
+
         if (playerScore > oppScore) {
-            ScoreText.GetComponent<Text>().text = $"Winning {playerScore} - {oppScore}";
+            ScoreText.text = $"Winning {playerScore} - {oppScore}";
         }
         else if (playerScore < oppScore) {
-            ScoreText.GetComponent<Text>().text = $"Losing {playerScore} - {oppScore}";
+            ScoreText.text = $"Losing {playerScore} - {oppScore}";
         }
         else if (playerScore == 0) {
-            ScoreText.GetComponent<Text>().text = $"Ready?";
+            ScoreText.text = $"Ready?";
         }
         else {
-            ScoreText.GetComponent<Text>().text = $"Tied {playerScore} - {oppScore}";
+            ScoreText.text = $"Tied {playerScore} - {oppScore}";
         }
     }
 }

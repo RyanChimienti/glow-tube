@@ -1,9 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class HandsManager : MonoBehaviour {    
+/// <summary>
+/// Fired when the player's hands change (i.e. from controllers to a paddle).
+/// </summary>
+[System.Serializable]
+public class HandsChangeEvent : UnityEvent<bool> {}
+
+public class HandsManager : MonoBehaviour {
+    [Header("Fired when the player's hands change (true if controllers, false if paddle).")]
+    public HandsChangeEvent HandsChangeEvent = new HandsChangeEvent();
+
     public GameObject leftHand;
     public GameObject rightHand;
     public GameObject leftControllerUI;
@@ -34,12 +44,6 @@ public class HandsManager : MonoBehaviour {
     }
 
     private void SetControllersActive(bool active) {
-        // Before activating the paddle, make sure it's in the correct hand.
-        if (!active && PlayerPrefs.HasKey("PaddleInLeftHand")) {
-            paddle.GetComponent<PaddleController>().LeftHand = System.Convert.ToBoolean(
-                PlayerPrefs.GetInt("PaddleInLeftHand")
-            );
-        }
         paddle.SetActive(!active);
 
         leftHand.GetComponent<XRController>().hideControllerModel = !active;
@@ -51,5 +55,7 @@ public class HandsManager : MonoBehaviour {
         rightControllerUI.SetActive(active);
 
         _controllersActive = active;
+
+        HandsChangeEvent.Invoke(active);
     }
 }
