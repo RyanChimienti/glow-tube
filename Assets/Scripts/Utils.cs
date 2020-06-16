@@ -26,6 +26,20 @@ public class Utils
     }
 
     /// <summary>
+    /// Returns the bounding box of an object's colliders, relative to the standard axes.
+    /// Takes into account the object itself and all its descendants. Assumes the position of
+    /// the object's transform is within the bounding box. 
+    /// </summary>
+    public static Bounds GetBoundingBox(GameObject obj) {
+        Bounds boundingBox = new Bounds(obj.transform.position, Vector3.zero);
+        Collider[] colliders = obj.GetComponentsInChildren<Collider>(true);
+        foreach (Collider col in colliders) {
+            boundingBox.Encapsulate(col.bounds);
+        }
+        return boundingBox;
+    }
+
+    /// <summary>
     /// Debug.Log, but your string is prefaced with a more precise timestamp.
     /// </summary>
     public static void DebugLog(string str) {

@@ -72,7 +72,7 @@ public class Reposition : MonoBehaviour {
 
         // First make the position of the hand match the center of the tunnel opening.
 
-        Bounds tunnelBounds = GetBoundingBox(GameObject.FindGameObjectWithTag("Tunnel"));
+        Bounds tunnelBounds = Utils.GetBoundingBox(GameObject.FindGameObjectWithTag("Tunnel"));
         Vector3 newHandPos = new Vector3(
             tunnelBounds.center.x, 
             tunnelBounds.center.y, 
@@ -89,19 +89,5 @@ public class Reposition : MonoBehaviour {
         Vector3 handToHead = headPos - newHandPos;
         float angleOff = Utils.AngleOffAroundAxis(handToHead, new Vector3(0, 0, -1), Vector3.up);
         cameraOffset.transform.RotateAround(newHandPos, Vector3.up, -angleOff);
-    }
-
-    /// <summary>
-    /// Returns the bounding box of an object's colliders, relative to the standard axes.
-    /// Takes into account the object itself and all its descendants. Assumes the position of
-    /// the object's transform is within the bounding box. 
-    /// </summary>
-    private Bounds GetBoundingBox(GameObject obj) {
-        Bounds boundingBox = new Bounds(obj.transform.position, Vector3.zero);
-        Collider[] colliders = obj.GetComponentsInChildren<Collider>(true);
-        foreach (Collider col in colliders) {
-            boundingBox.Encapsulate(col.bounds);
-        }
-        return boundingBox;
-    }
+    }    
 }
