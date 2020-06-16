@@ -5,12 +5,18 @@ using UnityEngine;
 /// <summary>
 /// Holds game values that do not change.
 /// </summary>
-public class GameConstants
-{
+public class GameConstants {
     /// <summary>
     /// If true, we log debug messages to console.
     /// </summary>
     public static bool DEBUG_MODE = true;
+
+    /// <summary>
+    /// The greatest possible angle off from straight when the ball
+    /// is launched towards the player (angle is chosen randomly
+    /// under this constraint).
+    /// </summary>
+    public static float MAX_BALL_START_ANGLE = 10;
 
     /// <summary>
     /// The speed of the ball at the start of a round.

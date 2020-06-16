@@ -31,9 +31,10 @@ public class BallSpawner : MonoBehaviour {
 
     public void OnRoundStart() {
         UpdatePosition();
-
         ball.transform.position = this.transform.position;
-        _ballRb.velocity = new Vector3(0, 0, -GameConstants.INITIAL_BALL_SPEED);
+        Vector3 ballDirection = new Vector3(0, 0, -GameConstants.INITIAL_BALL_SPEED);
+        Vector3 noisyBallDirection = Utils.RotateRandomly(ballDirection, GameConstants.MAX_BALL_START_ANGLE);
+        _ballRb.velocity = noisyBallDirection;
         ball.SetActive(true);
 
         // Disable the ball's collider for 3 physics steps to prevent a strange collision that

@@ -26,6 +26,41 @@ public class Utils
     }
 
     /// <summary>
+    /// Changes a vector's direction randomly, but by no more than a specified angle.
+    /// </summary>
+    public static Vector3 RotateRandomly(Vector3 original, float maxAngleDegrees) {
+        float rotAngle = (float)(new System.Random().NextDouble()) * maxAngleDegrees;
+        
+        // We start with the original vector
+        Vector3 result = new Vector3(original.x, original.y, original.z);
+
+        // Rotate it the desired rotation angle around an orthogonal axis
+        Vector3 orthogonal = GetAnyOrthogonalUnitVector(result);
+        result = Quaternion.AngleAxis(rotAngle, orthogonal) * result;
+
+        // Then rotate it a completely random angle around its original direction
+        float randomAngle = (float)(new System.Random().NextDouble()) * 360;
+        result = Quaternion.AngleAxis(randomAngle, original) * result;
+
+        return result;
+    }
+
+    /// <summary>
+    /// Returns any orthogonal unit vector to the given vector.
+    /// </summary>
+    public static Vector3 GetAnyOrthogonalUnitVector(Vector3 v) {
+        if (v == Vector3.zero) {
+            return Vector3.up;
+        }
+
+        Vector3 copyV = new Vector3(v.x, v.y, v.z);
+
+        Vector3 orthogonal = Vector3.zero;
+        Vector3.OrthoNormalize(ref copyV, ref orthogonal);
+        return orthogonal;
+    }
+
+    /// <summary>
     /// Returns the bounding box of an object's colliders, relative to the standard axes.
     /// Takes into account the object itself and all its descendants. Assumes the position of
     /// the object's transform is within the bounding box. 
