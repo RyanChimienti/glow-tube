@@ -23,12 +23,13 @@ public class PulseOnBallHit : MonoBehaviour {
     /// </summary>
     private System.DateTime lastPulseTime = System.DateTime.MinValue;
 
-    private Material[] originalMaterials;
+    /// <summary>
+    /// The material of this GameObject.
+    /// </summary>
+    private Material _material;
 
     private void Start() {
-        // Save the original material to set it back when the pulse ends.
-        MeshRenderer renderer = this.GetComponent<MeshRenderer>();
-        this.originalMaterials = renderer.materials;
+        _material = this.GetComponent<MeshRenderer>().material;
     }
 
     void OnCollisionEnter(Collision collision) {
@@ -37,11 +38,9 @@ public class PulseOnBallHit : MonoBehaviour {
             if (timeSinceLastPulse < MIN_TIME_BETWEEN_PULSES) {
                 return;
             }
-
-            MeshRenderer meshRenderer = this.GetComponent<MeshRenderer>();
-            Material[] oldMats = meshRenderer.materials;
-            oldMats[0] = pulseMaterial;
-            meshRenderer.materials = oldMats;
+         
+            _material.EnableKeyword("_EMISSION");
+            _material.SetColor("_EmissionColor", new Color32(40, 40, 40, 255));
             pulseSound.Play();
 
             lastPulseTime = System.DateTime.Now;
@@ -51,6 +50,7 @@ public class PulseOnBallHit : MonoBehaviour {
     }
 
     private void EndPulse() {
-            this.GetComponent<MeshRenderer>().materials = originalMaterials;            
+        // black is the same as no emission.
+        _material.SetColor("_EmissionColor", Color.black);
     }
 }

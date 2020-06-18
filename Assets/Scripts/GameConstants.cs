@@ -68,6 +68,21 @@ public class GameConstants {
     };
 
     /// <summary>
+    /// The color of the tunnel at the start of the game, and in between rounds.
+    /// </summary>
+    public static Color TUNNEL_START_COLOR = new Color32(77, 77, 77, 255);
+
+    /// <summary>
+    /// The color of the tunnel when the player hit the ball last.
+    /// </summary>
+    public static Color PLAYER_TURN_TUNNEL_COLOR = new Color32(0, 70, 0, 255);
+
+    /// <summary>
+    /// The color of the tunnel when the opponent hit the ball last.
+    /// </summary>
+    public static Color OPPONENT_TURN_TUNNEL_COLOR = new Color32(154, 63, 0, 255);
+
+    /// <summary>
     /// The time (in seconds) that we wait after the end of a round before
     /// auditorily announcing the outcome.
     /// </summary>
