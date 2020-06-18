@@ -15,17 +15,23 @@ public class DetectLetThrough : MonoBehaviour {
     /**
      * True if detecting the player's let through; false if detecting
      * the opponent's.
-     */ 
+     */
     public bool IsForPlayer;
 
-    void Start() {
-        // Hide this since it's just a trigger.
-        this.GetComponent<MeshRenderer>().enabled = false;
+    /// <summary>
+    /// Has this detector already found a let through this round? We need this
+    /// to prevent double detections.
+    /// </summary>
+    private bool _detectedAlreadyThisRound;
+
+    public void OnRoundStart() {
+        _detectedAlreadyThisRound = false;
     }
 
-    void OnTriggerEnter(Collider otherCollider) {
-        if (otherCollider.gameObject.tag == "Ball") {
-            LetThroughEvent.Invoke(IsForPlayer);
+    private void OnTriggerEnter(Collider otherCollider) {
+        if (otherCollider.gameObject.tag == "Ball" && !_detectedAlreadyThisRound) {
+            _detectedAlreadyThisRound = true;
+            LetThroughEvent.Invoke(IsForPlayer);            
         }    
     }
 }
