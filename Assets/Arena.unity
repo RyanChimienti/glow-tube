@@ -5328,7 +5328,7 @@ GameObject:
   - component: {fileID: 297431382}
   - component: {fileID: 297431381}
   - component: {fileID: 297431380}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SettingsMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6096,29 +6096,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e988983f96fe1dd48800bcdfc82f23e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LineWidth: 0.0199
+  m_LineWidth: 0.01
   m_OverrideInteractorLineLength: 1
-  m_LineLength: 10
+  m_LineLength: 1.5
   m_WidthCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
+      value: 1
+      inSlope: -0.7
+      outSlope: -0.7
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
+      value: 0.3
+      inSlope: -0.7
+      outSlope: -0.7
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -6228,27 +6228,27 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.0199
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
-        inSlope: 1
-        outSlope: 1
+        value: 1
+        inSlope: -0.7
+        outSlope: -0.7
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
-        outWeight: 0
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 1
+        value: 0.3
+        inSlope: -0.7
+        outSlope: -0.7
         tangentMode: 34
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.33333334
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -6305,7 +6305,7 @@ MonoBehaviour:
   m_InteractionManager: {fileID: 91345589}
   m_InteractionLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32
   m_AttachTransform: {fileID: 1925914738}
   m_StartingSelectedInteractable: {fileID: 0}
   m_OnHoverEnter:
@@ -6321,7 +6321,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectActionTrigger: 1
-  m_HideControllerOnSelect: 1
+  m_HideControllerOnSelect: 0
   m_PlayAudioClipOnSelectEnter: 0
   m_AudioClipForOnSelectEnter: {fileID: 0}
   m_PlayAudioClipOnSelectExit: 0
@@ -6357,7 +6357,7 @@ MonoBehaviour:
   m_SphereCastRadius: 0
   m_RaycastMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32
   m_RaycastTriggerInteraction: 1
   m_HoverToSelect: 0
   m_HoverTimeToSelect: 0
@@ -6412,7 +6412,7 @@ GameObject:
   - component: {fileID: 538460010}
   - component: {fileID: 538460012}
   - component: {fileID: 538460011}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6489,7 +6489,7 @@ GameObject:
   - component: {fileID: 609887736}
   - component: {fileID: 609887738}
   - component: {fileID: 609887737}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6868,7 +6868,7 @@ GameObject:
   - component: {fileID: 705257788}
   - component: {fileID: 705257790}
   - component: {fileID: 705257789}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7269,7 +7269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 966436683}
   - component: {fileID: 966436684}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8080,7 +8080,7 @@ GameObject:
   - component: {fileID: 1367927199}
   - component: {fileID: 1367927198}
   - component: {fileID: 1367927197}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PlayRoundButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8209,7 +8209,7 @@ GameObject:
   - component: {fileID: 1380992360}
   - component: {fileID: 1380992359}
   - component: {fileID: 1380992358}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DoneButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8472,7 +8472,7 @@ GameObject:
   - component: {fileID: 1550257238}
   - component: {fileID: 1550257237}
   - component: {fileID: 1550257242}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PlayMenu
   m_TagString: PlayMenu
   m_Icon: {fileID: 0}
@@ -8496,7 +8496,7 @@ MonoBehaviour:
   m_CheckFor3DOcclusion: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 4294967295
 --- !u!114 &1550257238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8789,29 +8789,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e988983f96fe1dd48800bcdfc82f23e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LineWidth: 0.0199
+  m_LineWidth: 0.01
   m_OverrideInteractorLineLength: 1
-  m_LineLength: 10
+  m_LineLength: 1.5
   m_WidthCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
+      value: 1
+      inSlope: -0.7
+      outSlope: -0.7
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
+      value: 0.3
+      inSlope: -0.7
+      outSlope: -0.7
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -8921,27 +8921,27 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.0199
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
-        inSlope: 1
-        outSlope: 1
+        value: 1
+        inSlope: -0.7
+        outSlope: -0.7
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
-        outWeight: 0
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 1
+        value: 0.3
+        inSlope: -0.7
+        outSlope: -0.7
         tangentMode: 34
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.33333334
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -8998,7 +8998,7 @@ MonoBehaviour:
   m_InteractionManager: {fileID: 91345589}
   m_InteractionLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32
   m_AttachTransform: {fileID: 416710889}
   m_StartingSelectedInteractable: {fileID: 0}
   m_OnHoverEnter:
@@ -9050,7 +9050,7 @@ MonoBehaviour:
   m_SphereCastRadius: 0
   m_RaycastMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32
   m_RaycastTriggerInteraction: 1
   m_HoverToSelect: 0
   m_HoverTimeToSelect: 0
@@ -9091,7 +9091,7 @@ GameObject:
   - component: {fileID: 1640555106}
   - component: {fileID: 1640555108}
   - component: {fileID: 1640555107}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9964,7 +9964,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2076343849}
   - component: {fileID: 2076343850}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Menus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10012,7 +10012,7 @@ GameObject:
   - component: {fileID: 2089086180}
   - component: {fileID: 2089086182}
   - component: {fileID: 2089086181}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10188,7 +10188,7 @@ GameObject:
   - component: {fileID: 2132745697}
   - component: {fileID: 2132745699}
   - component: {fileID: 2132745698}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10262,7 +10262,7 @@ GameObject:
   - component: {fileID: 2140216705}
   - component: {fileID: 2140216704}
   - component: {fileID: 2140216703}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10390,7 +10390,7 @@ GameObject:
   - component: {fileID: 2145478689}
   - component: {fileID: 2145478691}
   - component: {fileID: 2145478690}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Checkmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
