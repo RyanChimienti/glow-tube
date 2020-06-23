@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PulseOnBallHit : MonoBehaviour {
-    public Material pulseMaterial;
     public AudioSource pulseSound;
 
     /// <summary>
@@ -24,12 +23,12 @@ public class PulseOnBallHit : MonoBehaviour {
     private System.DateTime lastPulseTime = System.DateTime.MinValue;
 
     /// <summary>
-    /// The material of this GameObject.
+    /// The renderer of this GameObject.
     /// </summary>
-    private Material _material;
+    private MeshRenderer _renderer;
 
     private void Start() {
-        _material = this.GetComponent<MeshRenderer>().material;
+        _renderer = this.GetComponent<MeshRenderer>();
     }
 
     void OnCollisionEnter(Collision collision) {
@@ -38,9 +37,9 @@ public class PulseOnBallHit : MonoBehaviour {
             if (timeSinceLastPulse < MIN_TIME_BETWEEN_PULSES) {
                 return;
             }
-         
-            _material.EnableKeyword("_EMISSION");
-            _material.SetColor("_EmissionColor", new Color32(40, 40, 40, 255));
+
+            _renderer.material.EnableKeyword("_EMISSION");
+            _renderer.material.SetColor("_EmissionColor", new Color32(40, 40, 40, 255));
             pulseSound.Play();
 
             lastPulseTime = System.DateTime.Now;
@@ -51,6 +50,7 @@ public class PulseOnBallHit : MonoBehaviour {
 
     private void EndPulse() {
         // black is the same as no emission.
-        _material.SetColor("_EmissionColor", Color.black);
+        _renderer.material.EnableKeyword("_EMISSION");
+        _renderer.material.SetColor("_EmissionColor", Color.black);
     }
 }

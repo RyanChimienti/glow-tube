@@ -100,5 +100,5 @@ public class GameConstants {
     /// disabled. (This prevents the player from reaching too far
     /// through the tunnel.) NOTE: This is not yet used.
     /// </summary>
-    private static float PADDLE_BOUNDARY_Z = 0.8f;
+    public static float PADDLE_BOUNDARY_Z = 0.6f;
 }
