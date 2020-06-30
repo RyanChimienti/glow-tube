@@ -20,6 +20,8 @@ public class RoundManager : MonoBehaviour {
     [Header("Triggers when a round ends (the moment the outcome is known).")]
     public RoundEndEvent RoundEndEvent = new RoundEndEvent();
 
+    private bool _playingRound;
+
     public void OnPlayRoundButtonPress() {
         StartNewRound();
     }
@@ -28,20 +30,28 @@ public class RoundManager : MonoBehaviour {
         if (GameConstants.DEBUG_MODE) {
             Utils.DebugLog($"Round started.");
         }
-
+        
         RoundStartEvent.Invoke();
+        _playingRound = true;
     }
 
     public void OnBounceLimitExceeded(bool isForPlayer) {
-        EndRound(!isForPlayer, OutcomeReason.BOUNCE_LOSS);
+        if (_playingRound) {
+            EndRound(!isForPlayer, OutcomeReason.BOUNCE_LOSS);
+        }
+        
     }
 
     public void OnDoubleHit(bool isForPlayer) {
-        EndRound(!isForPlayer, OutcomeReason.DOUBLE_HIT);
+        if (_playingRound) {
+            EndRound(!isForPlayer, OutcomeReason.DOUBLE_HIT);
+        }
     }
 
     public void OnLetThrough(bool isForPlayer) {
-        EndRound(!isForPlayer, OutcomeReason.LET_THROUGH);
+        if (_playingRound) {
+            EndRound(!isForPlayer, OutcomeReason.LET_THROUGH);
+        }        
     }
 
     private void EndRound(bool playerWon, OutcomeReason reason) {
@@ -52,5 +62,6 @@ public class RoundManager : MonoBehaviour {
         }
 
         RoundEndEvent.Invoke(playerWon, reason);
+        _playingRound = false;
     }  
 }
