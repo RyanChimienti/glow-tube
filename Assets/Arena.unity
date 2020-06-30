@@ -5224,6 +5224,67 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &246687919
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 246687921}
+  - component: {fileID: 246687920}
+  m_Layer: 0
+  m_Name: LetThroughDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &246687920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246687919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee2eb1553b0b984db1bca28d29be2d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LetThroughEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1225229463}
+        m_MethodName: OnLetThrough
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  PlayerBallArea: {fileID: 1391143501}
+  OpponentBallArea: {fileID: 1247138478}
+  Ball: {fileID: 697055366}
+  Tunnel: {fileID: 52346352535383296}
+--- !u!4 &246687921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246687919}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.7714841, y: -2.1082609, z: 3.8103726}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 25
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &249433428
 GameObject:
   m_ObjectHideFlags: 0
@@ -7943,18 +8004,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1123004452}
   m_CullTransparentMesh: 0
---- !u!114 &1166451587 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2713497915621254639, guid: 7056b16e87679c649adb5d87e5fe619d,
-    type: 3}
-  m_PrefabInstance: {fileID: 2713497916619130476}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e06cf9dc00ae15542b9be6c862c4a47f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1225229462
 GameObject:
   m_ObjectHideFlags: 0
@@ -8075,7 +8124,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1961638617}
+      - m_Target: {fileID: 246687920}
         m_MethodName: OnRoundStart
         m_Mode: 1
         m_Arguments:
@@ -8086,7 +8135,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1166451587}
+      - m_Target: {fileID: 0}
         m_MethodName: OnRoundStart
         m_Mode: 1
         m_Arguments:
@@ -8199,6 +8248,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 246687920}
+        m_MethodName: OnRoundEnd
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1225229464
 Transform:
   m_ObjectHideFlags: 0
@@ -8212,6 +8272,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1247138477
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1247138480}
+  - component: {fileID: 1247138479}
+  - component: {fileID: 1247138478}
+  m_Layer: 0
+  m_Name: OpponentBallArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1247138478
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247138477}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &1247138479
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247138477}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1247138480
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247138477}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.968, z: 2.648}
+  m_LocalScale: {x: 1.6445841, y: 1.0579188, z: 0.47327802}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1353311296
 GameObject:
@@ -13225,6 +13338,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1380992356}
   m_CullTransparentMesh: 0
+--- !u!1 &1391143500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1391143503}
+  - component: {fileID: 1391143502}
+  - component: {fileID: 1391143501}
+  m_Layer: 0
+  m_Name: PlayerBallArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1391143501
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391143500}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &1391143502
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391143500}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1391143503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391143500}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.968, z: -0.182}
+  m_LocalScale: {x: 1.7679688, y: 1.4205468, z: 0.87828124}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 23
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1434565174
 GameObject:
   m_ObjectHideFlags: 0
@@ -14876,6 +15042,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: OpponentBallBoundary
       objectReference: {fileID: 0}
+    - target: {fileID: 2713497915621254638, guid: 7056b16e87679c649adb5d87e5fe619d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2713497915621254639, guid: 7056b16e87679c649adb5d87e5fe619d,
         type: 3}
       propertyPath: IsForPlayer
@@ -14911,20 +15082,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.02767997
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2713497915621254639, guid: 7056b16e87679c649adb5d87e5fe619d, type: 3}
+    - {fileID: 2713497915621254633, guid: 7056b16e87679c649adb5d87e5fe619d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7056b16e87679c649adb5d87e5fe619d, type: 3}
---- !u!114 &1961638617 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2713497915621254639, guid: 7056b16e87679c649adb5d87e5fe619d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1961638616}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e06cf9dc00ae15542b9be6c862c4a47f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1966629455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15770,17 +15931,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90.00001
       objectReference: {fileID: 0}
+    - target: {fileID: 2713497915621254633, guid: 7056b16e87679c649adb5d87e5fe619d,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2713497915621254638, guid: 7056b16e87679c649adb5d87e5fe619d,
         type: 3}
       propertyPath: m_Name
       value: PlayerBallBoundary
+      objectReference: {fileID: 0}
+    - target: {fileID: 2713497915621254638, guid: 7056b16e87679c649adb5d87e5fe619d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2713497915621254639, guid: 7056b16e87679c649adb5d87e5fe619d,
         type: 3}
       propertyPath: LetThroughEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1225229463}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2713497915621254639, guid: 7056b16e87679c649adb5d87e5fe619d, type: 3}
+    - {fileID: 2713497915621254633, guid: 7056b16e87679c649adb5d87e5fe619d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7056b16e87679c649adb5d87e5fe619d, type: 3}
 --- !u!65 &2851408094246782099
 BoxCollider:

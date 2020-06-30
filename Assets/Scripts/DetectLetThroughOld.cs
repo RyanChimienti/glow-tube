@@ -5,12 +5,12 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
-public class LetThroughEvent : UnityEvent<bool> {}
+public class OldLetThroughEvent : UnityEvent<bool> {}
 
-public class DetectLetThrough : MonoBehaviour {
+public class DetectLetThroughOld : MonoBehaviour {
     [Header("The argument is true if the let through was on the player's side.")]
     [SerializeField]
-    public LetThroughEvent LetThroughEvent = new LetThroughEvent();
+    public OldLetThroughEvent LetThroughEvent = new OldLetThroughEvent();
 
     /**
      * True if detecting the player's let through; false if detecting
