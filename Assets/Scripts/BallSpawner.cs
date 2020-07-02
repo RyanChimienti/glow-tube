@@ -32,9 +32,7 @@ public class BallSpawner : MonoBehaviour {
     public void OnRoundStart() {
         UpdatePosition();
         ball.transform.position = this.transform.position;
-        Vector3 ballDirection = new Vector3(0, 0, -GameConstants.INITIAL_BALL_SPEED);
-        Vector3 noisyBallDirection = Utils.RotateRandomly(ballDirection, GameConstants.MAX_BALL_START_ANGLE);
-        _ballRb.velocity = noisyBallDirection;
+        _ballRb.velocity = Vector3.zero;
         ball.SetActive(true);
 
         // Disable the ball's collider for 3 physics steps to prevent a strange collision that
@@ -42,10 +40,25 @@ public class BallSpawner : MonoBehaviour {
         // (Specifically, this collision was happening after some double hit losses.)
         _ballCollider.enabled = false;
         Invoke("EnableBallCollider", Time.fixedDeltaTime * 3);
+
+        // Launch the ball after 1.5 seconds.
+        Invoke("LaunchBall", 1.5f);
     }
 
     private void EnableBallCollider() {
         _ballCollider.enabled = true;
+    }
+
+    private void LaunchBall() {
+        Vector3 ballDirection = new Vector3(0, 0, -GameConstants.INITIAL_BALL_SPEED);
+        Vector3 noisyBallDirection = Utils.RotateRandomly(ballDirection, GameConstants.MAX_BALL_START_ANGLE);
+        _ballRb.velocity = noisyBallDirection;        
+    }
+
+    public void OnRoundEnd(bool playerWon, OutcomeReason reason) {
+        // If the round somehow ends before the ball is launched 
+        // (which shouldn't be possible), cancel the upcoming launch.
+        CancelInvoke();
     }
 
     /// <summary>
