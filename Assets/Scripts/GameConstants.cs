@@ -31,7 +31,7 @@ public class GameConstants {
     /// <summary>
     /// The speed the opponent moves while playing a round.
     /// </summary>
-    public static float OPPONENT_PLAY_SPEED = 1.2f;
+    public static float OPPONENT_PLAY_SPEED = 1.1f;
 
     /// <summary>
     /// The speed the opponent moves while returning to its ready position
