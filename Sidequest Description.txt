@@ -1,0 +1,8 @@
+You and your AI opponent are staring each other down through a wide rectangular tube. (Well, he would be staring if he had eyes; he's just a rectangle.) You hit a glowing ball back and forth, trying to get it past one another. As the ball bounces off your paddle and the walls of the tunnel, there are satisfying pulses and beeps, like you're in a giant pinball machine. Things change color. It's kind of fun. 
+<br/>
+But we're not here for fun. As the round goes on, the ball gets faster and faster. When someone finally wins (who am I kidding? That someone will be your opponent) the ball shatters in a burst of colored sparks. If your spirit hasn't been crushed, you can start the next round.
+<br/>
+A few things to be aware of:
+* If you hit the ball twice in a row before it gets to your opponent, it shatters in a burst of yellow sparks, and you lose the round. Hit the ball once!
+* If the ball bounces too many times off the walls of the tunnel before reaching your opponent, it shatters in a burst of magenta sparks, and you lose the round. Hit the ball straight-ish!
+* If you move your paddle past the red line, it doesn't work and the announcer yells at you. Watch those hands!
