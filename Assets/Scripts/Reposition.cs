@@ -1,8 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+/// <summary>
+/// Fired when the player starts repositioning
+/// </summary>
+[System.Serializable]
+public class RepositionStartEvent : UnityEvent<bool> { }
+
+/// <summary>
+/// Fired when the player stops repositioning
+/// </summary>
+[System.Serializable]
+public class RepositionEndEvent : UnityEvent<bool> { }
 
 public class Reposition : MonoBehaviour {
+    [Header("Fired when reposition starts (true if left hand, false if right).")]
+    public RepositionStartEvent RepositionStartEvent = new RepositionStartEvent();
+
+    [Header("Fired when reposition ends (true if left hand, false if right).")]
+    public RepositionEndEvent RepositionEndEvent = new RepositionEndEvent();
+
     private bool _repositionAllowed;
     private bool _repositioningLeft;
     private bool _repositioningRight;
@@ -19,36 +38,50 @@ public class Reposition : MonoBehaviour {
         _repositionAllowed = controllersActive;
         
         if (!controllersActive) {
-            _repositioningLeft = false;
-            _repositioningRight = false;
+            EndLeftRepositionIfHappening();
+            EndRightRepositionIfHappening();
         }
     }
 
     public void OnLeftSecondaryButtonDown() {
+        EndRightRepositionIfHappening();
         if (_repositionAllowed) {
             _repositioningLeft = true;
+            RepositionStartEvent.Invoke(true);
         }
     }
 
     public void OnLeftSecondaryButtonUp() {
-        _repositioningLeft = false;
+        EndLeftRepositionIfHappening();
     }
 
     public void OnRightSecondaryButtonDown() {
+        EndLeftRepositionIfHappening();
         if (_repositionAllowed) {
             _repositioningRight = true;
+            RepositionStartEvent.Invoke(false);
         }
     }
 
     public void OnRightSecondaryButtonUp() {
-        _repositioningRight = false;
+        EndRightRepositionIfHappening();
+    }
+
+    private void EndLeftRepositionIfHappening() {
+        if (_repositioningLeft) {
+            _repositioningLeft = false;
+            RepositionEndEvent.Invoke(true);
+        }
+    }
+
+    private void EndRightRepositionIfHappening() {
+        if (_repositioningRight) {
+            _repositioningRight = false;
+            RepositionEndEvent.Invoke(false);
+        }
     }
 
     public void FixedUpdate() {
-        if (!_repositionAllowed) {
-            return;
-        }
-
         if (_repositioningRight) {
             MoveArena(false);
         }

@@ -13332,6 +13332,7 @@ GameObject:
   - component: {fileID: 1434565178}
   - component: {fileID: 1434565177}
   - component: {fileID: 1434565176}
+  - component: {fileID: 1434565179}
   m_Layer: 5
   m_Name: LeftControllerUI
   m_TagString: LeftControllerUI
@@ -13420,6 +13421,21 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1434565179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434565174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fabadd9109782643a90d9684f2eb1d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  secondaryButtonIcon: {fileID: 1666044022}
+  secondaryButtonRing: {fileID: 505239612}
+  isLeft: 1
 --- !u!1 &1546502110
 GameObject:
   m_ObjectHideFlags: 0
@@ -13690,6 +13706,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7165372f6590f3e42a80083871488537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RepositionStartEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1434565179}
+        m_MethodName: OnRepositionStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2131067343}
+        m_MethodName: OnRepositionStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  RepositionEndEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1434565179}
+        m_MethodName: OnRepositionEnd
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2131067343}
+        m_MethodName: OnRepositionEnd
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1587661438
 Transform:
   m_ObjectHideFlags: 0
@@ -15290,6 +15356,7 @@ GameObject:
   - component: {fileID: 2131067342}
   - component: {fileID: 2131067341}
   - component: {fileID: 2131067340}
+  - component: {fileID: 2131067343}
   m_Layer: 5
   m_Name: RightControllerUI
   m_TagString: RightControllerUI
@@ -15378,6 +15445,21 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &2131067343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131067338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fabadd9109782643a90d9684f2eb1d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  secondaryButtonIcon: {fileID: 1123004454}
+  secondaryButtonRing: {fileID: 1569798030}
+  isLeft: 0
 --- !u!1 &2132745696
 GameObject:
   m_ObjectHideFlags: 0
